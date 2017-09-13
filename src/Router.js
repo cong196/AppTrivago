@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import Main from './Main/Main';
+import MainView from './Main/MainView';
 import Menu from './Menu/Menu';
 import Account from './Account/Account';
 import Search from './Search/Search';

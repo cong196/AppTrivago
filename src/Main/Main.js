@@ -3,23 +3,50 @@ import {
     View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, TouchableWithoutFeedback,
     TextInput, FlatList
 } from 'react-native';
+import PopupDialog from 'react-native-popup-dialog';
+
+import HeaderFlatList from './HeaderFlatList';
+import MapViewComponent from './MapView';
 import opemenu from '../img/openmenu.png';
 import icsearch from '../img/Search.png';
 import icMap from '../img/Map.png';
 import icAc from '../img/Account.png';
 
 const { height, width } = Dimensions.get('window');
+const height1 = height/13;
+const height2 = height/12;
 export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mang: []
+            mang: [],
+            refresh: false,
+            map: true,
+            maxheight : height- height1 - height2,
+            heightbottom: height1,
+            heigthmapview: 0,
+            isModalVisible: false
         };
+    }
+    
+    showModal = () => this.setState({ isModalVisible: true })
+    refresh() {
+        this.loadData();
+    }
+    clickMap(){
+        this.setState({
+            map : !this.state.map
+        });
+        if(this.state.map){
+            this.setState({maxheight: 0,heightbottom:0,heigthmapview:height-height1-height2});
+        }
+        else
+            this.setState({maxheight: height-height1-height2,heightbottom: height1,heigthmapview: 0})
     }
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style = {{ flex:1 }}>
+            <View style = {styles.container}>
                 <View style={styles.header}>
                     <View style={{ flex: 1 }}>
                         <TouchableWithoutFeedback
@@ -29,65 +56,115 @@ export default class Main extends Component {
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={{ flex: 5 }}>
-                        <TextInput 
-                            placeholder='Tìm kiếm'
-                            underlineColorAndroid='rgba(0,0,0,0)'
-                        />
+                        
+                            <TextInput 
+                                onFocus = { () => { navigate('SearchScreen')}}
+                                placeholder='Tìm kiếm'
+                                underlineColorAndroid='rgba(0,0,0,0)'
+                            />
+                       
                     </View>
                     <View style={{ flex: 4, justifyContent: 'space-between', flexDirection: 'row', paddingRight: 5 }}>
                         <Image style={styles.imgHeader} source={icsearch} />
-                        <Image style={styles.imgHeader} source={icMap} />
-                        <Image style={styles.imgHeader} source={icAc} />
+                        <TouchableOpacity
+                            onPress={()=>{this.clickMap()}}                        
+                        >
+                            <Image style={styles.imgHeader} source={icMap} />
+                        </TouchableOpacity>
+                        <TouchableWithoutFeedback
+                            onPress={() => { navigate('AccountScreen', { param: 'Hoang Van Cong' }) }}
+                        >
+                            <Image style={styles.imgHeader} source={icAc} />
+                        </TouchableWithoutFeedback>
                     </View>
 
 
                 </View>
-                <Text>Main Screen</Text>
                 <TouchableOpacity
-                    onPress={() => { navigate('AccountScreen', { param: 'Hoang Van Cong' }) }}
+                    onPress={()=>{this.refs.ds.scrollToIndex({animated: true,index:0,viewPosition:0})}}
                 >
-                    <Text>Go go Account Screen</Text>
+                    <Text>Up</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress = { () => { navigate('SearchScreen') }}
-                >
-                    <Text>Go go Search Screen</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress = {()=>{navigate('DetailScreen')}}
-                >
-                    <Text>Go to Details</Text>
-                </TouchableOpacity>
-
-                <FlatList 
+                <View style={{height: this.state.maxheight }}>
+                <FlatList
+                    ref = "ds"
+                    ListHeaderComponent = {(<HeaderFlatList />)}
+                    refreshing = {this.state.refresh}
+                    onRefresh = {()=>{this.refresh()}}
                     data={this.state.mang}
-                    renderItem={({ item }) => 
+                    renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
-                            <Text>{item.key}</Text>
+                            <TouchableWithoutFeedback
+                                onPress = {()=>{navigate('DetailScreen')}}
+                            >
+                                <View>
+                                    <Text>{item.key}</Text>
+                                    <Text>{item.hoten}</Text>
+                                    <Image
+                                        style={{width: 50, height: 50}}
+                                        source={{uri: item.hinh}}
+                                    />
+                                    <Text>{item.mota}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                     }
                 />
+                
+                    <View
+                        style = {{backgroundColor: 'white', height: this.state.heightbottom}}
+                    >
+                        <TouchableOpacity
+                            onPress={() => {this.popupDialog.show()}}
+                        >
+                        <View>
+                            <Text>Sắp xếp theo khoảng cách</Text>
+                        </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style = {{ height: this.state.heigthmapview }}>
+                        <MapViewComponent />
+                    </View>
+                </View>
+                <PopupDialog
+                    ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+                >
+                    <View>
+                    <Text>Hello</Text>
+                    </View>
+                </PopupDialog>
             </View>
+        
         )
     }
 
-    componentDidMount(){
-        // fetch("http://191.168.1.91:8080/Flatlist/demo1.php")
-        // .then((response) => response.json())
-        // .then((responseJson) => {
-        //     this.setState({
-        //         mang: responseJson
-        //     });
-        // })
-        // .catch((e)=>{console.log(e)});
+    loadData() {
 
-        console.log("sdjfkhsdkjfskdfjk");
+        this.setState({
+            refresh: true
+        })
+        fetch("http://192.168.1.173/Flatlist/demo1.php")
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson,
+                refresh : false
+            });
+        })
+        .catch((e)=>{console.log(e)});
+    }
+    componentDidMount(){
+         this.loadData();
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    containerhiden: {
+        height: 0
+    },
     header: {
         flexDirection: 'row',
         backgroundColor: 'white',
@@ -104,6 +181,9 @@ const styles = StyleSheet.create({
     rowFlatlist: {
         padding:10,
         borderBottomWidth: 1
+    },
+    itemBottom: {
+        backgroundColor: 'white'
     }
     
 })  
