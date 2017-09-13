@@ -3,8 +3,8 @@ import {
     View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, TouchableWithoutFeedback,
     TextInput, FlatList
 } from 'react-native';
-import PopupDialog from 'react-native-popup-dialog';
-
+import PopupDialog, { SlideAnimation, DialogTitle, DialogButton } from 'react-native-popup-dialog';
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import HeaderFlatList from './HeaderFlatList';
 import MapViewComponent from './MapView';
 import opemenu from '../img/openmenu.png';
@@ -15,6 +15,7 @@ import icAc from '../img/Account.png';
 const { height, width } = Dimensions.get('window');
 const height1 = height/13;
 const height2 = height/12;
+
 export default class Main extends Component {
     constructor(props) {
         super(props);
@@ -22,13 +23,13 @@ export default class Main extends Component {
             mang: [],
             refresh: false,
             map: true,
-            maxheight : height- height1 - height2,
+            maxheight: height - height1 - height2,
             heightbottom: height1,
             heigthmapview: 0,
-            isModalVisible: false
+            isModalVisible: false,
+            sortIndex: 0
         };
     }
-    
     showModal = () => this.setState({ isModalVisible: true })
     refresh() {
         this.loadData();
@@ -42,6 +43,13 @@ export default class Main extends Component {
         }
         else
             this.setState({maxheight: height-height1-height2,heightbottom: height1,heigthmapview: 0})
+    }
+    
+    onSelect(index){
+        this.popupDialog.dismiss(() => {
+          });
+          this.setState({sortIndex:index});
+        this.loadData();
     }
     render() {
         const { navigate } = this.props.navigation;
@@ -127,11 +135,37 @@ export default class Main extends Component {
                     </View>
                 </View>
                 <PopupDialog
+                    width= {0.9*width}
                     ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+                    dialogAnimation = { new SlideAnimation({ slideFrom: 'bottom' }) }
+                    dialogTitle={<DialogTitle title="Sort by" />}
+                    
                 >
-                    <View>
-                    <Text>Hello</Text>
+                    <View style = {{ margin: 10}}>
+                        <RadioGroup
+                            selectedIndex = {0}
+                            onSelect = {(index) => {this.onSelect(index)}}
+                        >
+                            <RadioButton value={'item1'} >
+                            <Text>Sort by Distance</Text>
+                            </RadioButton>
+
+                            <RadioButton value={'item2'}>
+                            <Text>Sort by Popularity</Text>
+                            </RadioButton>
+
+                            <RadioButton value={'item3'}>
+                                <Text>Focus on Rating</Text>
+                            </RadioButton>
+                            <RadioButton value={'item4'}>
+                                <Text>Focus on Price</Text>
+                            </RadioButton>
+                            
+                        </RadioGroup>
+                        
                     </View>
+                    
+
                 </PopupDialog>
             </View>
         
@@ -143,7 +177,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true
         })
-        fetch("http://192.168.1.173/Flatlist/demo1.php")
+        fetch("http://192.168.1.173/Flatlist/demo2.php")
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
