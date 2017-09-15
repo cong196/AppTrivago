@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import PopupDialog, { SlideAnimation, DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import global from '../global';
 import HeaderFlatList from './HeaderFlatList';
 import MapViewComponent from './MapView';
 import opemenu from '../img/openmenu.png';
@@ -27,12 +28,14 @@ export default class Main extends Component {
             heightbottom: height1,
             heigthmapview: 0,
             isModalVisible: false,
-            sortIndex: 0
+            sortIndex: 0,
+            page: 1
         };
+        global.searchData = this.loadData.bind(this);
     }
     showModal = () => this.setState({ isModalVisible: true })
     refresh() {
-        this.loadData();
+        this.loadData(1);
     }
     clickMap(){
         this.setState({
@@ -49,7 +52,7 @@ export default class Main extends Component {
         this.popupDialog.dismiss(() => {
           });
           this.setState({sortIndex:index});
-        this.loadData();
+        this.loadData(1);
     }
     render() {
         const { navigate } = this.props.navigation;
@@ -66,7 +69,7 @@ export default class Main extends Component {
                     <View style={{ flex: 5 }}>
                         
                             <TextInput 
-                                onFocus = { () => { navigate('SearchScreen')}}
+                                onFocus = { () => { navigate('SearchScreen', {navtigation: navigate })}}
                                 placeholder='Tìm kiếm'
                                 underlineColorAndroid='rgba(0,0,0,0)'
                             />
@@ -172,23 +175,23 @@ export default class Main extends Component {
         )
     }
 
-    loadData() {
+    loadData(page) {
 
         this.setState({
             refresh: true
         })
-        fetch("http://192.168.1.173/Flatlist/demo2.php")
+        fetch("http://192.168.137.124/Flatlist/demo3.php?trang="+page)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
                 mang: responseJson,
-                refresh : false
+                refresh: false
             });
         })
         .catch((e)=>{console.log(e)});
     }
     componentDidMount(){
-         this.loadData();
+         this.loadData(1);
     }
 }
 

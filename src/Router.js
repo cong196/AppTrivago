@@ -13,7 +13,7 @@ import Details from './Details/Details';
 var { height, width } = Dimensions.get('window');
 
 export const MainStack = StackNavigator({
-    MainScreen:{
+    MainScreen: {
         screen: Main,
         navigationOptions: {
             header: null
@@ -22,13 +22,13 @@ export const MainStack = StackNavigator({
     AccountScreen:{
         screen: Account,
         navigationOptions: {
-            headerTitle: 'Account'
+            headerTitle: 'My favorite hotels'
         }
     },
-    SearchScreen:{
+    SearchScreen: {
         screen: Search
     },
-    DetailScreen:{
+    DetailScreen: {
         screen: Details
     }
     

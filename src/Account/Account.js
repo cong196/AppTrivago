@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';
 import {
-    View, Text
+    View, Text, StyleSheet
 } from 'react-native';
 
 export default class Account extends Component {
@@ -13,3 +13,9 @@ export default class Account extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
