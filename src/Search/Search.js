@@ -6,8 +6,10 @@ import global from '../global';
 export default class Search extends Component {
 
     search(page) {
+       
         this.goBack1();
         global.searchData(3);
+        
     }
     goBack1() {
         this.props.navigation.goBack();

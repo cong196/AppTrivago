@@ -31,11 +31,31 @@ export default class Main extends Component {
             sortIndex: 0,
             page: 1
         };
-        global.searchData = this.loadData.bind(this);
+        global.searchData = this.loadDataFromSearch.bind(this);
     }
+
+    componentDidMount() {
+        this.loadData(1);
+   }
     showModal = () => this.setState({ isModalVisible: true })
     refresh() {
-        this.loadData(1);
+        this.loadDataRefresh();
+    }
+
+    loadDataRefresh(){
+        this.setState({
+            refresh: true
+        })
+        fetch("http://192.168.1.173/Flatlist/demo3.php?trang="+1)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson,
+                refresh: false,
+                page: 1,
+            });
+        })
+        .catch((e)=>{console.log(e)});
     }
     clickMap(){
         this.setState({
@@ -47,13 +67,51 @@ export default class Main extends Component {
         else
             this.setState({maxheight: height-height1-height2,heightbottom: height1,heigthmapview: 0})
     }
-    
-    onSelect(index){
+    loadDataFromSearch(page){
+        this.setState({
+            refresh: true,
+        })
+        fetch("http://192.168.1.173/Flatlist/demo3.php?trang="+page)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson,
+                refresh: false,
+                page: 3,
+            });
+        })
+        .catch((e)=>{console.log(e)});
+    }
+    loadMore(){
+        alert("chạm đáy");
+        this.setState({
+            page: this.state.page + 1
+        }),
+        this.loadData(this.state.page);
+        
+        
+    }
+    onSelect(index) {
         this.popupDialog.dismiss(() => {
           });
-          this.setState({sortIndex:index});
+          this.setState({ sortIndex: index });
         this.loadData(1);
     }
+    loadData(page) {
+                this.setState({
+                    refresh: true
+                })
+                fetch("http://192.168.1.173/Flatlist/demo3.php?trang="+page)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                        mang: this.state.mang.concat(responseJson),
+                        refresh: false,
+                        page: this.state.page + 1
+                    });
+                })
+                .catch((e) => { console.log(e) });
+            }
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -96,24 +154,33 @@ export default class Main extends Component {
                 >
                     <Text>Up</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => { this.loadDataRefresh() }}
+                >
+                    <Text>Load Page 3</Text>
+                </TouchableOpacity>
+
                 <View style={{height: this.state.maxheight }}>
                 <FlatList
-                    ref = "ds"
-                    ListHeaderComponent = {(<HeaderFlatList />)}
-                    refreshing = {this.state.refresh}
-                    onRefresh = {()=>{this.refresh()}}
+                    onEndReachedThreshold={0.11}
+                    onEndReached={() => { this.loadMore() }}
+                    ref="ds"
+                    ListHeaderComponent={(<HeaderFlatList />)}
+                    refreshing={this.state.refresh}
+                    onRefresh={() => { this.refresh() }}
                     data={this.state.mang}
                     renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
                             <TouchableWithoutFeedback
-                                onPress = {()=>{navigate('DetailScreen')}}
+                                onPress={() => { navigate('DetailScreen') }}
                             >
                                 <View>
                                     <Text>{item.key}</Text>
                                     <Text>{item.hoten}</Text>
                                     <Image
-                                        style={{width: 50, height: 50}}
-                                        source={{uri: item.hinh}}
+                                        style={{ width: 50, height: 50 }}
+                                        source={{ uri: item.hinh }}
                                     />
                                     <Text>{item.mota}</Text>
                                 </View>
@@ -175,24 +242,7 @@ export default class Main extends Component {
         )
     }
 
-    loadData(page) {
-
-        this.setState({
-            refresh: true
-        })
-        fetch("http://192.168.137.124/Flatlist/demo3.php?trang="+page)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                mang: responseJson,
-                refresh: false
-            });
-        })
-        .catch((e)=>{console.log(e)});
-    }
-    componentDidMount(){
-         this.loadData(1);
-    }
+    
 }
 
 const styles = StyleSheet.create({
