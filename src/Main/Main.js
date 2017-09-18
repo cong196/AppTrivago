@@ -12,7 +12,10 @@ import opemenu from '../img/openmenu.png';
 import icsearch from '../img/Search.png';
 import icMap from '../img/Map.png';
 import icAc from '../img/Account.png';
-import imgex from '../img/imgexam.png'
+import imgex from '../img/imgexam.png';
+import s1 from '../img/sad.png';
+import s2 from '../img/s2.png';
+import s3 from '../img/s3.png';
 const { height, width } = Dimensions.get('window');
 const height1 = height/13;
 const height2 = height/12;
@@ -196,50 +199,72 @@ export default class Main extends Component {
                                         <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }}/>
                                         <View style={{ flex: 2 }}>
                                             <View style={{ flex: 1 }}>
-                                                <View style = {{ flex: 1,}}>
+                                                <View style={{ flex: 1, paddingLeft: 5, paddingVertical: 2 }}>
+                                                    <Text style={{ fontWeight: 'bold' }}>Thao Dien Village</Text>
+                                                    <Text >TPHCM 8,0 km từ vị trí của bạn</Text>
                                                 </View>
-                                                <View style = {{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee',flexDirection: 'row' }}>
-                                                    <View style= {{ flex: 1 }}>
-                                                        <View style = {{ flex: 1,}}>
+                                                <View style = {{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee', flexDirection: 'row' }}>
+                                                    <View style={{ flex: 1 }}>
+                                                        <View style={{ flex: 1, paddingHorizontal: 2, paddingVertical: 2, flexDirection: 'row' }}>
+                                                            {/* <Image resizeMode={'contain'} source={item.key%2===0 ? s1: s3} style={{ flex: 1 }} /> */}
+                                                            <View style={{ flex: 2, paddingVertical: 2 }}>
+                                                                <Image resizeMode={'contain'} source={item.key % 2 === 0 ? s1 : s3} style={{ flex: 1 }} />
+                                                            </View>
+                                                            
+                                                            <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
+                                                                <Text style={{ fontSize: 12 }}>91/100</Text>
+                                                                <Text style={{ fontSize: 10 }}>135 reviews</Text>
+                                                            </View>
                                                         </View>
-                                                        <View style = {{ flex: 1, borderTopWidth: 1, borderTopColor: '#e9ebee' }}>
+                                                        <View style={{ flex: 1, borderTopWidth: 1, borderTopColor: '#e9ebee' }}>
                                                         </View>
                                                     </View>
-                                                    <View style= {{ flex: 1, borderLeftWidth: 1, borderLeftColor: '#e9ebee'}}>
+                                                    <View style={{ flex: 1, borderLeftWidth: 1, borderLeftColor: '#e9ebee'}}>
+                                                        <View style={{ flex: 1, paddingHorizontal: 2, paddingVertical: 2 }}>
+                                                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                                                                <Text style={{ fontSize: 10 }}>Giá từ</Text>
+                                                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#248f24' }}>1.010.134 đ</Text>
+                                                            </View>
+                                                        </View>
+
+                                                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <TouchableOpacity>
+                                                                <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3 }}>View Details</Text>
+                                                            </TouchableOpacity>
+                                                        </View>
+
                                                     </View>
                                                 </View>
                                             </View>
                                         </View>
                                     </View>
-                                
+                               
                             </TouchableWithoutFeedback>
                         </View>
                     }
                 />
                 
-                    <View
-                        style = {{backgroundColor: 'white', height: this.state.heightbottom}}
-                    >
+                    <View style={{ backgroundColor: 'white', height: this.state.heightbottom }}>
                         <TouchableOpacity
-                            onPress={() => {this.popupDialog.show()}}
+                            onPress={() => { this.popupDialog.show() }}
                         >
                         <View>
                             <Text>Sắp xếp theo khoảng cách</Text>
                         </View>
                         </TouchableOpacity>
                     </View>
-                    <View style = {{ height: this.state.heigthmapview }}>
+                    <View style={{ height: this.state.heigthmapview }}>
                         <MapViewComponent />
                     </View>
                 </View>
                 <PopupDialog
-                    width= {0.9*width}
+                    width={0.9 * width}
                     ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-                    dialogAnimation = { new SlideAnimation({ slideFrom: 'bottom' }) }
+                    dialogAnimation={new SlideAnimation({ slideFrom: 'bottom' })}
                     dialogTitle={<DialogTitle title="Sort by" />}
                     
                 >
-                    <View style = {{ margin: 10}}>
+                    <View style={{ margin: 10 }}>
                         <RadioGroup
                             selectedIndex = {0}
                             onSelect = {(index) => {this.onSelect(index)}}
