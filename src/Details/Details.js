@@ -34,7 +34,6 @@ export default class Details extends Component {
     addData() {
         alert(this.state.id);
     }
-
     render() {
         const idCS = this.props.navigation.state.params.id;
         return (

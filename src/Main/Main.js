@@ -12,7 +12,7 @@ import opemenu from '../img/openmenu.png';
 import icsearch from '../img/Search.png';
 import icMap from '../img/Map.png';
 import icAc from '../img/Account.png';
-
+import imgex from '../img/imgexam.png'
 const { height, width } = Dimensions.get('window');
 const height1 = height/13;
 const height2 = height/12;
@@ -182,7 +182,7 @@ export default class Main extends Component {
                             <TouchableWithoutFeedback
                                 onPress={() => { navigate('DetailScreen', { name: item.hoten, id: item.key }) }}
                             >
-                                <View>
+                                {/* <View>
                                     <Text>{item.key}</Text>
                                     <Text>{item.hoten}</Text>
                                     <Image
@@ -190,7 +190,28 @@ export default class Main extends Component {
                                         source={{ uri: item.hinh }}
                                     />
                                     <Text>{item.mota}</Text>
-                                </View>
+                                </View> */}
+
+                                    <View style={{ height: width / 3, flexDirection: 'row', backgroundColor: 'white', borderRadius: 5 }}>
+                                        <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }}/>
+                                        <View style={{ flex: 2 }}>
+                                            <View style={{ flex: 1 }}>
+                                                <View style = {{ flex: 1,}}>
+                                                </View>
+                                                <View style = {{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee',flexDirection: 'row' }}>
+                                                    <View style= {{ flex: 1 }}>
+                                                        <View style = {{ flex: 1,}}>
+                                                        </View>
+                                                        <View style = {{ flex: 1, borderTopWidth: 1, borderTopColor: '#e9ebee' }}>
+                                                        </View>
+                                                    </View>
+                                                    <View style= {{ flex: 1, borderLeftWidth: 1, borderLeftColor: '#e9ebee'}}>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                
                             </TouchableWithoutFeedback>
                         </View>
                     }
@@ -236,20 +257,13 @@ export default class Main extends Component {
                             </RadioButton>
                             <RadioButton value={'item4'}>
                                 <Text>Focus on Price</Text>
-                            </RadioButton>
-                            
-                        </RadioGroup>
-                        
+                            </RadioButton>                      
+                        </RadioGroup>                 
                     </View>
-                    
-
                 </PopupDialog>
             </View>
-        
         )
     }
-
-    
 }
 
 const styles = StyleSheet.create({
@@ -273,8 +287,9 @@ const styles = StyleSheet.create({
         height: 25,
     },
     rowFlatlist: {
-        padding:10,
-        borderBottomWidth: 1
+        paddingHorizontal: 5,
+        paddingVertical: 2.5
+        //borderBottomWidth: 1
     },
     itemBottom: {
         backgroundColor: 'white'
