@@ -1,15 +1,51 @@
 import React,{ Component } from 'react';
 import {
-    View, Text, StyleSheet
+    View, Text, StyleSheet, ScrollView
 } from 'react-native';
 
 export default class Account extends Component {
     render() {
         return (
-            <View>
+            <ScrollView style = {styles.container}>
                 <Text>Account Screen</Text>
                 <Text>{this.props.navigation.state.params.param}</Text>
-            </View>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>{this.props.navigation.state.params.param}</Text>
+                <Text>Account Screen</Text>
+                <Text>34</Text>
+            </ScrollView>
         )
     }
 }

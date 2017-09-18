@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text, Image, StyleSheet, TouchableOpacity,Slider
+    Text, Image, StyleSheet, TouchableOpacity,Slider, ScrollView
 } from 'react-native';
 
 
@@ -45,7 +45,7 @@ export default class TopFilters extends Component {
     }
     render() {
         return (
-            <View>
+            <ScrollView style ={{flex: 1}}>
                 <View style={styles.viewVote}>
                     <TouchableOpacity
                         onPress={() => { this.setState({ vote1: !this.state.vote1 })}}
@@ -132,7 +132,7 @@ export default class TopFilters extends Component {
                     />
                 </View>
                 <View style={{ height: 1, backgroundColor: 'gray' }} />
-            </View>
+            </ScrollView>
         )
     }
 }

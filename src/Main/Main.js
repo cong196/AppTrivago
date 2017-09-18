@@ -4,7 +4,7 @@ import {
     TextInput, FlatList
 } from 'react-native';
 import PopupDialog, { SlideAnimation, DialogTitle, DialogButton } from 'react-native-popup-dialog';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import global from '../global';
 import HeaderFlatList from './HeaderFlatList';
 import MapViewComponent from './MapView';
@@ -67,6 +67,9 @@ export default class Main extends Component {
         else
             this.setState({maxheight: height-height1-height2,heightbottom: height1,heigthmapview: 0})
     }
+
+
+    
     loadDataFromSearch(page){
         this.setState({
             refresh: true,
@@ -84,10 +87,10 @@ export default class Main extends Component {
     }
     loadMore(){
         alert("chạm đáy");
-        this.setState({
-            page: this.state.page + 1
-        }),
-        this.loadData(this.state.page);
+        // this.setState({
+        //     page: this.state.page + 1
+        // }),
+        this.loadData(this.state.page+1);
         
         
     }
@@ -112,6 +115,10 @@ export default class Main extends Component {
                 })
                 .catch((e) => { console.log(e) });
             }
+
+    testt(){
+        alert(this.state.page)
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -156,14 +163,14 @@ export default class Main extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { this.loadDataRefresh() }}
+                    onPress={() => { this.testt() }}
                 >
                     <Text>Load Page 3</Text>
                 </TouchableOpacity>
 
                 <View style={{height: this.state.maxheight }}>
                 <FlatList
-                    onEndReachedThreshold={0.11}
+                    onEndReachedThreshold={0.2}
                     onEndReached={() => { this.loadMore() }}
                     ref="ds"
                     ListHeaderComponent={(<HeaderFlatList />)}
@@ -173,7 +180,7 @@ export default class Main extends Component {
                     renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
                             <TouchableWithoutFeedback
-                                onPress={() => { navigate('DetailScreen') }}
+                                onPress={() => { navigate('DetailScreen', { name: item.hoten, id: item.key }) }}
                             >
                                 <View>
                                     <Text>{item.key}</Text>

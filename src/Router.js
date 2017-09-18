@@ -19,7 +19,7 @@ export const MainStack = StackNavigator({
             header: null
         }
     },
-    AccountScreen:{
+    AccountScreen: {
         screen: Account,
         navigationOptions: {
             headerTitle: 'My favorite hotels'
