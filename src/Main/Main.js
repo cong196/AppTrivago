@@ -40,7 +40,7 @@ export default class Main extends Component {
     componentDidMount() {
         this.loadData(1);
    }
-    showModal = () => this.setState({ isModalVisible: true })
+    
     refresh() {
         this.loadDataRefresh();
     }
@@ -88,21 +88,21 @@ export default class Main extends Component {
         })
         .catch((e)=>{console.log(e)});
     }
-    loadMore(){
+    loadMore() {
         alert("chạm đáy");
         // this.setState({
         //     page: this.state.page + 1
         // }),
-        this.loadData(this.state.page+1);
-        
-        
+        this.loadData(this.state.page + 1);
     }
     onSelect(index) {
         this.popupDialog.dismiss(() => {
           });
           this.setState({ sortIndex: index });
-        this.loadData(1);
+        
+        this.refresh();
     }
+    showModal = () => this.setState({ isModalVisible: true });
     loadData(page) {
                 this.setState({
                     refresh: true
@@ -199,9 +199,9 @@ export default class Main extends Component {
                                         <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }}/>
                                         <View style={{ flex: 2 }}>
                                             <View style={{ flex: 1 }}>
-                                                <View style={{ flex: 1, paddingLeft: 5, paddingVertical: 2 }}>
-                                                    <Text style={{ fontWeight: 'bold' }}>Thao Dien Village</Text>
-                                                    <Text >TPHCM 8,0 km từ vị trí của bạn</Text>
+                                                <View style={{ flex: 1, paddingLeft: 5, paddingVertical: 2, paddingRight: 2 }}>
+                                                    <Text numberOfLines={1} style={{ fontWeight: 'bold' }}>Thao Dien Village</Text>
+                                                    <Text numberOfLines={1}>TPHCM 8,0 km từ vị trí của bạnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn</Text>
                                                 </View>
                                                 <View style = {{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee', flexDirection: 'row' }}>
                                                     <View style={{ flex: 1 }}>
@@ -229,7 +229,7 @@ export default class Main extends Component {
 
                                                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                                             <TouchableOpacity>
-                                                                <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3 }}>View Details</Text>
+                                                                <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>View Details</Text>
                                                             </TouchableOpacity>
                                                         </View>
 
