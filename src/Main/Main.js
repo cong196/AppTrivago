@@ -107,7 +107,7 @@ export default class Main extends Component {
                 this.setState({
                     refresh: true
                 })
-                fetch("http://192.168.1.173/Flatlist/demo3.php?trang="+page)
+                fetch("http://192.168.1.173/Demo/demo1.php")
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
@@ -120,7 +120,7 @@ export default class Main extends Component {
             }
 
     testt(){
-        alert(this.state.page)
+        alert(this.state.mang.length)
     }
     render() {
         const { navigate } = this.props.navigation;
@@ -183,25 +183,15 @@ export default class Main extends Component {
                     renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
                             <TouchableWithoutFeedback
-                                onPress={() => { navigate('DetailScreen', { name: item.hoten, id: item.key }) }}
+                                onPress={() => { navigate('DetailScreen', { name: item.ten, id: item.key }) }}
                             >
-                                {/* <View>
-                                    <Text>{item.key}</Text>
-                                    <Text>{item.hoten}</Text>
-                                    <Image
-                                        style={{ width: 50, height: 50 }}
-                                        source={{ uri: item.hinh }}
-                                    />
-                                    <Text>{item.mota}</Text>
-                                </View> */}
-
-                                    <View style={{ height: width / 3, flexDirection: 'row', backgroundColor: 'white', borderRadius: 5 }}>
+                             <View style={{ height: width / 3, flexDirection: 'row', backgroundColor: 'white', borderRadius: 5 }}>
                                         <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }}/>
                                         <View style={{ flex: 2 }}>
                                             <View style={{ flex: 1 }}>
                                                 <View style={{ flex: 1, paddingLeft: 5, paddingVertical: 2, paddingRight: 2 }}>
-                                                    <Text numberOfLines={1} style={{ fontWeight: 'bold' }}>Thao Dien Village</Text>
-                                                    <Text numberOfLines={1}>TPHCM 8,0 km từ vị trí của bạnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn</Text>
+                                                    <Text numberOfLines={1} style={{ fontWeight: 'bold' }}>{item.ten}</Text>
+                                                    <Text numberOfLines={1}>{item.diachi}</Text>
                                                 </View>
                                                 <View style = {{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee', flexDirection: 'row' }}>
                                                     <View style={{ flex: 1 }}>
@@ -223,7 +213,7 @@ export default class Main extends Component {
                                                         <View style={{ flex: 1, paddingHorizontal: 2, paddingVertical: 2 }}>
                                                             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                                                 <Text style={{ fontSize: 10 }}>Giá từ</Text>
-                                                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#248f24' }}>1.010.134 đ</Text>
+                                                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#248f24' }}>{item.gia}</Text>
                                                             </View>
                                                         </View>
 
