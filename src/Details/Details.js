@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, Dimensions, TouchableOpacity
+    View, Text, StyleSheet, Dimensions, TouchableOpacity,Image
 } from 'react-native';
 import { TbDetails } from './RouterDetails';
 const { height, width } = Dimensions.get('window');
+import {IndicatorViewPager, PagerDotIndicator } from 'rn-viewpager';
 
 export default class Details extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -22,33 +23,63 @@ export default class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 0
+            mang: [],
+            item: 0
         }
     }
     componentDidMount() {
-        this.props.navigation.setParams({ add: this.addData });
-        this.setState({
-            id: this.props.navigation.state.params.id
-        })
+        // this.props.navigation.setParams({ add: this.addData });
+        // this.setState({
+        //     id: this.props.navigation.state.params.id
+        // })
+
+        this.loadData();
     }
+    // componentWillMount(){
+    //     this.loadData();
+    // }
     addData() {
         alert(this.state.id);
     }
+    _renderDotIndicator() {
+        return <PagerDotIndicator pageCount={this.state.mang.length} />;
+    }
+
+    loadData() {
+        alert(this.props.navigation.state.params.id);
+        fetch("http://192.168.1.173:8080/Demo/getHinhAnh.php?id=" + this.props.navigation.state.params.id)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson,
+                item: this.state.mang.length
+            });
+            alert(this.state.mang.length)
+        })
+        .catch((e) => { console.log(e) });
+        
+   }
+
     render() {
-        const idCS = this.props.navigation.state.params.id;
+        const lst = <IndicatorViewPager
+                        style={{height: height / 3 - 10 }}
+                        indicator={this._renderDotIndicator()} >
+                    { 
+                        this.state.mang.map(
+                            e => (
+                                    <Image key={e.id} source={{ uri: e.link }} />
+                                )
+                        )
+                    }
+                    </IndicatorViewPager>
         return (
-            <View style = {styles.container}>
-                <View style = {styles.boximg}>
-                    <Text> {this.props.navigation.state.params.id}</Text>
-                    <TouchableOpacity
-                        onPress = {()=>{this.addData(this.state.id)}}
-                    >
-                        <Text>DDDd</Text>
-                    </TouchableOpacity>
-                </View>
+            <View style={{ flex:1 }}>
+                {
+                    this.state.mang.length ? lst : null
+                }
                 <View style = {{ flex:1 }}>
-                    <TbDetails />
-                </View> 
+                   <TbDetails />
+                </View>
             </View>
         )
     }

@@ -1,3 +1,4 @@
 module.export = {
-    searchData: null
+    searchData: null,
+    idKS: null,
 }

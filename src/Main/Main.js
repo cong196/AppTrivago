@@ -35,6 +35,7 @@ export default class Main extends Component {
             page: 1
         };
         global.searchData = this.loadDataFromSearch.bind(this);
+        
     }
 
     componentDidMount() {
@@ -70,9 +71,6 @@ export default class Main extends Component {
         else
             this.setState({maxheight: height-height1-height2,heightbottom: height1,heigthmapview: 0})
     }
-
-
-    
     loadDataFromSearch(page){
         this.setState({
             refresh: true,
@@ -107,7 +105,7 @@ export default class Main extends Component {
                 this.setState({
                     refresh: true
                 })
-                fetch("http://192.168.1.173/Demo/demo1.php")
+                fetch("http://192.168.1.173:8080/Demo/demo1.php")
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
@@ -183,7 +181,10 @@ export default class Main extends Component {
                     renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
                             <TouchableWithoutFeedback
-                                onPress={() => { navigate('DetailScreen', { name: item.ten, id: item.key }) }}
+                                onPress={() => { 
+                                    global.idKS = item.key;
+                                    navigate('DetailScreen', { name: item.ten, id: item.key })
+                                    }}
                             >
                              <View style={{ height: width / 3, flexDirection: 'row', backgroundColor: 'white', borderRadius: 5 }}>
                                         <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }}/>
