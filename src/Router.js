@@ -29,7 +29,10 @@ export const MainStack = StackNavigator({
         screen: Search
     },
     DetailScreen: {
-        screen: Details
+        screen: Details,
+        navigationOptions: {
+            header: null
+        }
     }
     
 });

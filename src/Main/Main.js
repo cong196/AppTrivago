@@ -87,7 +87,7 @@ export default class Main extends Component {
         .catch((e)=>{console.log(e)});
     }
     loadMore() {
-        alert("chạm đáy");
+        //alert("chạm đáy");
         // this.setState({
         //     page: this.state.page + 1
         // }),

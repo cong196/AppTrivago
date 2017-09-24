@@ -11,7 +11,7 @@ export const TbDetails = TabNavigator(
         TabDetails: {
             screen: Details_Info,
             navigationOptions: {
-                tabBarLabel: 'Details'
+                tabBarLabel: 'Details',
             }
         },
         TabRatings: {
