@@ -11,19 +11,19 @@ export const TbDetails = TabNavigator(
         TabDetails: {
             screen: Details_Info,
             navigationOptions: {
-                tabBarLabel: 'Details',
+                tabBarLabel: 'Chi Tiết',
             }
         },
         TabRatings: {
             screen: Ratings,
             navigationOptions: {
-                tabBarLabel: 'Ratings'
+                tabBarLabel: 'Bình Luận'
             }
         },
         TabMapView: {
             screen: MapView,
             navigationOptions: {
-                tabBarLabel: 'Map'
+                tabBarLabel: 'Bản Đồ'
             }
         }
     },
