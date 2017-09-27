@@ -7,7 +7,7 @@ export default class Ratings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mang: [{"id":1,"ten":"James Nguyễn","noidung":"Tốt"},{"id":3,"ten":"Messi","noidung":"Đẹp đẹp đẹp đẹp"},{"id":4,"ten":"Ronaldo","noidung":"Chất lượng ngon ngon ngon ngon"},{"id":5,"ten":"Nguyễn Văn Nhật","noidung":"Siêu siêu siêu soee"},{"id":6,"ten":"Chung Nguyen","noidung":"adb is not recognized as an internal or external command,operable program or batch file"}],
+            mang: [],
             value: '',
             height: 40,
             dangnhap : false
@@ -33,6 +33,22 @@ export default class Ratings extends Component {
             alert('Nhập nội dung !!')
         }
             
+    }
+
+    loadData() {
+        fetch("http://192.168.1.89:8080/Demo/getBinhLuan.php?id=1&trang=1")
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson
+            });
+        })
+        .catch((e) => { console.log(e) });
+       
+    }
+
+    componentDidMount() {
+        this.loadData();
     }
     render() {
         return (
@@ -75,7 +91,7 @@ export default class Ratings extends Component {
                             <Image source={iconaccount} style={{ width: 25, height: 25 }} />
                             <View style={{ borderWidth: 1, padding: 5, flex: 1, marginLeft: 5, borderRadius: 5, borderColor: '#e9ebee' }}>
                                 <Text style = {{ fontWeight: 'bold' }}>{item.ten}</Text>
-                                <Text>{item.noidung}</Text>
+                                <Text>{item.binhluan}</Text>
                             </View>
                         </View>
                     </View>

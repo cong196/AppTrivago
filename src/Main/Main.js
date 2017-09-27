@@ -75,7 +75,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true,
         })
-        fetch("http://192.168.1.88:8080/Flatlist/demo3.php?trang="+page)
+        fetch("http://192.168.1.89:8080/Flatlist/demo3.php?trang="+page)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -105,7 +105,7 @@ export default class Main extends Component {
                 this.setState({
                     refresh: true
                 })
-                fetch("http://192.168.1.88:8080/Demo/demo1.php")
+                fetch("http://192.168.1.89:8080/Demo/demo1.php")
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
