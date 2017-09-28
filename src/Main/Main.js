@@ -75,7 +75,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true,
         })
-        fetch("http://192.168.1.89:8080/Flatlist/demo3.php?trang="+page)
+        fetch("http://192.168.1.88:8080/Flatlist/demo3.php?trang="+page)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -105,7 +105,7 @@ export default class Main extends Component {
                 this.setState({
                     refresh: true
                 })
-                fetch("http://192.168.1.89:8080/Demo/demo1.php")
+                fetch("http://192.168.1.174:8080/Demo/demo1.php")
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
@@ -219,7 +219,9 @@ export default class Main extends Component {
                                                         </View>
 
                                                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                                            <TouchableOpacity>
+                                                            <TouchableOpacity
+                                                                
+                                                            >
                                                                 <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>View Details</Text>
                                                             </TouchableOpacity>
                                                         </View>

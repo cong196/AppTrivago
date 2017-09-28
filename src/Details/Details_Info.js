@@ -10,7 +10,17 @@ export default class Details_Info extends Component {
         super(props);
         this.state = {
             id: 0,
-            mang: []
+            mang: [],
+            wifisanh: false,
+            wifiphong: false,
+            beboi: false,
+            spa: false,
+            doxe: false,
+            vatnuoi: false,
+            dieuhoa: false,
+            nhahang: false,
+            bar: false,
+            gym: false
         }
     }
     
@@ -18,23 +28,57 @@ export default class Details_Info extends Component {
        this.setState({
            id: this.props.id
        });
-       this.loadData(1);
+       this.loadThongTin();
    }
 
-    loadData() {
-         this.setState({
-             refresh: true
+    loadThongTin() {
+        this.setState({
+            refresh: true
+       })
+        fetch("http://192.168.1.174:8080/Demo/getThongTinKhachSan.php?id=" + global.idKS)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson
+            });
+            
+            var temp = this.state.mang[0].tiennghihangdau.split('');
+            
+            if (temp[0] === '1') {
+                this.setState({ wifisanh: true });
+            };
+            if (temp[1] === '1') {
+                this.setState({ wifiphong: true })
+            };
+            if (temp[2] === '1') {
+                this.setState({ beboi: true })
+            };
+            if (temp[3] === '1') {
+                this.setState({ spa: true })
+            };
+            if (temp[4] === '1') {
+                this.setState({ doxe: true })
+            };
+            if(temp[5]==='1'){
+                this.setState({vatnuoi:true})
+            };
+            if(temp[6]==='1'){
+                this.setState({dieuhoa:true})
+            };
+            if(temp[7]==='1'){
+                this.setState({nhahang:true})
+            };
+            if(temp[8]==='1'){
+                this.setState({bar:true})
+            };
+            if(temp[9]==='1'){
+                this.setState({gym:true})
+            };
         })
-         fetch("http://192.168.1.173:8080/Demo/getHinhAnh.php?id=" + global.idKS)
-         .then((response) => response.json())
-         .then((responseJson) => {
-             this.setState({
-                 mang: responseJson
-             });
-         })
-         .catch((e) => { console.log(e) });
-        
-    }
+        .catch((e) => { console.log(e) });
+       
+   }
+
     render(){
         return(
             <ScrollView>
@@ -42,31 +86,31 @@ export default class Details_Info extends Component {
                     <Text style={styles.textHead}>Tiện nghi hàng đầu</Text>
                     <View style={styles.row}>
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icwifi.png')} style={styles.imageItem} />
+                            <Image source={this.state.wifisanh === false ? require('./img/icwifi.png') : require('./img/icwifi_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Wifi tại sảnh</Text>
                             </View>
                         </View>
 
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icwifi_active.png')} style={styles.imageItem} />
+                            <Image source={this.state.wifiphong === false ? require('./img/icwifi.png') : require('./img/icwifi_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Wifi trong phòng</Text>
                             </View>
                         </View>
                     </View>
 
-
+                    
                     <View style={styles.row}>
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icpool.png')} style={styles.imageItem} />
+                            <Image source={this.state.beboi === false ? require('./img/icpool.png') : require('./img/icpool_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Bể bơi</Text>
                             </View>
                         </View>
 
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icspa.png')} style={styles.imageItem} />
+                            <Image source={!this.state.spa ? require('./img/icspa.png') : require('./img/icspa_active.png') } style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Spa</Text>
                             </View>
@@ -75,14 +119,14 @@ export default class Details_Info extends Component {
 
                     <View style={styles.row}>
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icparking.png')} style={styles.imageItem} />
+                            <Image source={!this.state.doxe ? require('./img/icparking.png') : require('./img/icparking_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Bãi đồ xe</Text>
                             </View>
                         </View>
 
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icpet.png')} style={styles.imageItem} />
+                            <Image source={!this.state.vatnuoi ? require('./img/icpet.png') : require('./img/icpet_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Chấp nhận vật nuôi</Text>
                             </View>
@@ -91,14 +135,14 @@ export default class Details_Info extends Component {
 
                     <View style={styles.row}>
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icondhnd.png')} style={styles.imageItem} />
+                            <Image source={!this.state.dieuhoa ? require('./img/icondhnd.png') : require('./img/icondhnd_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Điều hòa nhiệt độ</Text>
                             </View>
                         </View>
 
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icrestaurant.png')} style={styles.imageItem} />
+                            <Image source={!this.state.nhahang ? require('./img/icrestaurant.png') : require('./img/icrestaurant_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Nhà hàng</Text>
                             </View>
@@ -107,14 +151,14 @@ export default class Details_Info extends Component {
 
                     <View style={styles.row}>
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icbar.png')} style={styles.imageItem} />
+                            <Image source={!this.state.bar ? require('./img/icbar.png') : require('./img/icbar_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Quầy bar</Text>
                             </View>
                         </View>
 
                         <View style={[styles.item, {  }]}>
-                            <Image source={require('./img/icgym.png')} style={styles.imageItem} />
+                            <Image source={!this.state.gym ? require('./img/icgym.png') : require('./img/icgym_active.png')} style={styles.imageItem} />
                             <View style = {{ flex: 4 }}>
                                 <Text numberOfLines={1}>Phòng Gym</Text>
                             </View>
@@ -125,7 +169,7 @@ export default class Details_Info extends Component {
                 <View style={{ borderBottomWidth: 1/2, borderBottomColor: '#767b83' }}></View>
                 <View style={{ padding: 7 }}>
                     <Text style={styles.textHead}>Hình thức chỗ ở</Text>
-                    <Text>Khách sạn</Text>
+                    <Text>{this.state.mang.length > 0 ? this.state.mang[0].loai : ''}</Text>
                 </View>
 
                 <View style={{ borderBottomWidth: 1/2, borderBottomColor: '#767b83' }}></View>
@@ -136,21 +180,21 @@ export default class Details_Info extends Component {
                     <View style={[styles.item, { paddingVertical: 7 }]}>
                             <Image source={require('./img/iclink.png')} style={styles.imageItem} />
                             <View style = {{ flex: 9 }}>
-                                <Text numberOfLines={1}>Website</Text>
+                                <Text numberOfLines={1}>{this.state.mang.length > 0 ? this.state.mang[0].website : ''}</Text>
                             </View>
                     </View>
 
                     <View style={[styles.item, { paddingVertical: 7 }]}>
                             <Image source={require('./img/icphone.png')} style={styles.imageItem} />
                             <View style = {{ flex: 9 }}>
-                                <Text numberOfLines={1}>+84(8)62824842</Text>
+                                <Text numberOfLines={1}>{this.state.mang.length > 0 ? this.state.mang[0].sdt : ''}</Text>
                             </View>
                     </View>
 
                     <View style={[styles.item, { paddingVertical: 7 }]}>
                             <Image source={require('./img/iconmap.png')} style={styles.imageItem} />
                             <View style = {{ flex: 9 }}>
-                                <Text>526 Kha Van Cân, Q.Thủ Đức, 700000 TP.Hô Chí Minh</Text>
+                                <Text>{this.state.mang.length > 0 ? this.state.mang[0].diachi : ''}</Text>
                             </View>
                     </View>
 

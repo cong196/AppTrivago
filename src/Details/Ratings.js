@@ -10,7 +10,8 @@ export default class Ratings extends Component {
             mang: [],
             value: '',
             height: 40,
-            dangnhap : false
+            dangnhap : false,
+            loading: true
         }
     }
     
@@ -36,7 +37,7 @@ export default class Ratings extends Component {
     }
 
     loadData() {
-        fetch("http://192.168.1.89:8080/Demo/getBinhLuan.php?id=1&trang=1")
+        fetch("http://192.168.1.174:8080/Demo/getBinhLuan.php?id=1&trang=1")
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -98,7 +99,17 @@ export default class Ratings extends Component {
                     }
                     ListFooterComponent={(
                         <View style= {{ padding: 10 }}>
-                            <Text style={{ color: '#4267b2' }}>Xem thêm bình luận ...</Text>
+                            {
+                                !this.state.loading ?
+                                    (
+                                        <TouchableOpacity>
+                                            <Text style={{ color: '#4267b2' }}>Xem thêm bình luận ...</Text>
+                                        </TouchableOpacity>) :
+                                    (
+                                        <Image source={require('./img/loading.gif')} style={{ height: 40, width: 40 }}/>
+                                    )
+                            }
+
                         </View>
                     )}
                 />
