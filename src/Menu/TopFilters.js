@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text, Image, StyleSheet, TouchableOpacity,Slider, ScrollView
+    Text, Image, StyleSheet, TouchableOpacity, Slider, ScrollView
 } from 'react-native';
 
 
@@ -19,12 +19,20 @@ import wifi from '../img/convenient/Wifi.png';
 import wifi_act from '../img/convenient/wifi_act.png';
 import spa from '../img/convenient/Spa.png';
 import spa_act from '../img/convenient/Spa_act.png';
-import beach from '../img/convenient/Beach.png';
-import beach_act from '../img/convenient/Beach_act.png';
-import breakfast from '../img/convenient/breakfast.png';
-import breakfast_act from '../img/convenient/breakfast_act.png';
-import pool from '../img/convenient/swimming.png';
-import pool_act from '../img/convenient/swimming_act.png' ;
+import bar from '../img/convenient/bar.png';
+import bar_ac from '../img/convenient/bar_ac.png';
+import gym from '../img/convenient/gym.png';
+import gym_ac from '../img/convenient/gym_ac.png';
+import beboi from '../img/convenient/icbeboi.png';
+import beboi_ac from '../img/convenient/icbeboi_ac.png';
+import dieuhoa from '../img/convenient/icdh.png';
+import dieuhoa_ac from '../img/convenient/icdh_at.png';
+import doxe from '../img/convenient/icdoxe.png';
+import doxe_ac from '../img/convenient/icdoxe_act.png';
+import nhahang from '../img/convenient/icnhahang.png';
+import nhahang_ac from '../img/convenient/icnhahang_ac.png';
+import vatnuoi from '../img/convenient/icvatnuoi.png';
+import vatnuoi_ac from '../img/convenient/icvatnuoi_ac.png';
 
 export default class TopFilters extends Component {
     constructor(props) {
@@ -36,11 +44,17 @@ export default class TopFilters extends Component {
             vote4: false,
             vote5: false,
             wifi: false,
+            wifi2: false,
             spa: false,
-            beach: false,
-            breakfast: false,
-            pool: false,
-            value: 0
+            beboi: false,
+            doxe: false,
+            vatnuoi: false,
+            dieuhoa: false,
+            nhahang: false,
+            bar: false,
+            gym: false,
+            value: 0,
+            valuemax: 0
         };
     }
     render() {
@@ -58,14 +72,14 @@ export default class TopFilters extends Component {
                         onPress = { ()=>{ this.setState({ vote2:!this.state.vote2 }) }}
                         style = { styles.imgView }
                     >
-                        <Image style = { styles.img }  source = { this.state.vote2 ? vote2_Act : vote2 } />
+                        <Image style = { styles.img } source={ this.state.vote2 ? vote2_Act : vote2 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress = {() => { this.setState({ vote3: !this.state.vote3 })}}
                         style = { styles.imgView }
                     >
-                        <Image style={styles.img}  source = { this.state.vote3 ? vote3_Act : vote3 } />
+                        <Image style={styles.img} source={ this.state.vote3 ? vote3_Act : vote3 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -82,45 +96,106 @@ export default class TopFilters extends Component {
                         <Image style={styles.img}  source = { this.state.vote5 ? vote5_Act : vote5 } />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.viewVote}>
-                <TouchableOpacity
-                        onPress={() => { this.setState({ wifi: !this.state.wifi })}}
-                        style={styles.imgView}
+                <View style={{ height: 1, backgroundColor: 'gray' }} />
+                
+                <View style={[styles.viewVote2, { paddingTop: 15 }]}>
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ wifi: !this.state.wifi }) }}
                     >
-                        <Image style = { styles.img }  source = { this.state.wifi ? wifi_act : wifi } />
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity
-                        onPress = { ()=>{ this.setState({ spa:!this.state.spa }) }}
-                        style = { styles.imgView }
-                    >
-                        <Image style = { styles.img }  source = { this.state.spa ? spa_act : spa } />
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Image source={this.state.wifi ? wifi_act : wifi} style={styles.img}/>
+                                <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Wifi sảnh</Text>
+                        </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress = {() => { this.setState({ beach: !this.state.beach })}}
-                        style = { styles.imgView }
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ wifi2: !this.state.wifi2 }) }}
                     >
-                        <Image style={styles.img}  source = { this.state.beach ? beach_act : beach } />
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.wifi2 ? wifi_act : wifi } style={styles.img}/>
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Wifi phòng</Text>
+                        </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress={()=>{ this.setState({ breakfast:!this.state.breakfast }) }}
-                        style={styles.imgView}
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ beboi: !this.state.beboi }) }}
                     >
-                        <Image style={styles.img}  source = { this.state.breakfast ? breakfast_act : breakfast } />
+                        <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+                            <Image source={this.state.beboi ? beboi_ac : beboi} style={styles.img} />
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Bể bơi</Text>
+                        </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress = { ()=>{ this.setState({ pool:!this.state.pool }) }}
-                        style = { styles.imgView }
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ spa: !this.state.spa }) }}
                     >
-                        <Image style={styles.img} source={this.state.pool ? pool_act : pool}/>
+                        <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+                            <Image source={this.state.spa ? spa_act : spa } style={styles.img}/>
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Spa</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ doxe: !this.state.doxe }) }}
+                    >
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.doxe ? doxe_ac : doxe } style={styles.img} />
+                            <Text numberOfLines={1}  style={{ fontSize: 12, paddingVertical: 5 }}>Đỗ xe</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
-                <View style = {{ height: 1, backgroundColor: 'gray' }}/>
-                <View style={{ paddingVertical: 10 , padding: 10 }}>
-                    <Text>Max: {this.state.value} VNĐ</Text>
+
+                <View style={styles.viewVote2}>
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ vatnuoi: !this.state.vatnuoi }) }}
+                    >
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.vatnuoi ? vatnuoi_ac : vatnuoi } style={styles.img} />
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Pet</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ dieuhoa: !this.state.dieuhoa }) }}
+                    >
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.dieuhoa ? dieuhoa_ac : dieuhoa } style={styles.img} />
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Điều hòa</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ nhahang: !this.state.nhahang }) }}
+                    >
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.nhahang ? nhahang_ac : nhahang } style={styles.img} />
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Nhà hàng</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ bar: !this.state.bar }) }}
+                    >
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.bar ? bar_ac : bar } style={styles.img} />
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Bar</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => { this.setState({ gym: !this.state.gym }) }}
+                    >
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={this.state.gym ? gym_ac : gym} style={styles.img} />
+                            <Text numberOfLines={1} style={{ fontSize: 12, paddingVertical: 5 }}>Gym</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ height: 1, backgroundColor: 'gray' }} />
+
+                <View style={{ paddingVertical: 10, padding: 10 }}>
+                    <Text>Giá tối thiểu: {this.state.value} VNĐ</Text>
                 <Slider
                     
                     minimumValue={0}
@@ -132,6 +207,20 @@ export default class TopFilters extends Component {
                     />
                 </View>
                 <View style={{ height: 1, backgroundColor: 'gray' }} />
+
+                <View style={{ paddingVertical: 10 , padding: 10 }}>
+                    <Text>Giá tối đa: {this.state.valuemax} VNĐ</Text>
+                <Slider
+                    
+                    minimumValue={0}
+                    maximumValue={50000}
+                    step={1}
+                    thumbTouchSize = {{width: 50, height: 50}}
+                    onValueChange={value => this.setState({ valuemax: value })}
+                    
+                    />
+                </View>
+
             </ScrollView>
         )
     }
@@ -141,16 +230,23 @@ const styles = StyleSheet.create({
     viewVote: {
         flex: 1,
         flexDirection: 'row',
-        padding: 25,
+        padding: 15,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    viewVote2: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingBottom: 15,
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     imgView: {
-        width: 25,
-        height: 25,
+        width: 30,
+        height: 30,
     },
     img: {
-        width: 25,
-        height: 25,
+        width: 30,
+        height: 30,
     }
 });
