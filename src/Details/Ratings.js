@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
-    View, FlatList, Text, Image, TextInput, StyleSheet, TouchableOpacity
+    View, FlatList, Text, Image, TextInput, StyleSheet, TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
+import global from '../global';
 import iconaccount from '../img/iconaccount.png';
 export default class Ratings extends Component {
     constructor(props) {
@@ -10,22 +12,26 @@ export default class Ratings extends Component {
             mang: [],
             value: '',
             height: 40,
-            dangnhap : false,
-            loading: true
+            dangnhap: false,
+            loading: false,
+            page: 1
         }
     }
     
     post() {
-        if(this.state.value != ''){
+        if(this.state.value != '') {
             if(!this.state.dangnhap)
             {
+                
                 const { mang } = this.state;
                 var maxId = Math.max.apply(null, mang.map(item => item.id)) + 1;
-                mang.unshift({ id: maxId, ten: 'ABC', noidung: this.state.value });
+                mang.unshift({ id: maxId, ten: 'ABC', binhluan: this.state.value });
+               
                 this.setState({
                     mang,
                     value: '',
-                })
+                });
+                alert(this.state.mang[0].noidung);
             }
             else{
                 alert('Bạn chưa đăng nhập .. ')
@@ -37,7 +43,7 @@ export default class Ratings extends Component {
     }
 
     loadData() {
-        fetch("http://192.168.1.174:8080/Demo/getBinhLuan.php?id=1&trang=1")
+        fetch("http://192.168.1.88:8080/Demo/getBinhLuan.php?id=" + global.idKS + "&trang=" + this.state.page)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -48,6 +54,9 @@ export default class Ratings extends Component {
        
     }
 
+    loadThemBinhLuan() {
+        this.setState({ loading: true });
+    }
     componentDidMount() {
         this.loadData();
     }
@@ -102,11 +111,16 @@ export default class Ratings extends Component {
                             {
                                 !this.state.loading ?
                                     (
-                                        <TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => { this.loadThemBinhLuan() }}
+                                        >
                                             <Text style={{ color: '#4267b2' }}>Xem thêm bình luận ...</Text>
                                         </TouchableOpacity>) :
                                     (
-                                        <Image source={require('./img/loading.gif')} style={{ height: 40, width: 40 }}/>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                            <ActivityIndicator size={24} />
+                                            <Text>   Loading ...</Text>
+                                        </View>
                                     )
                             }
 

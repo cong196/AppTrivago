@@ -35,7 +35,7 @@ export default class Details_Info extends Component {
         this.setState({
             refresh: true
        })
-        fetch("http://192.168.1.174:8080/Demo/getThongTinKhachSan.php?id=" + global.idKS)
+        fetch("http://192.168.1.88:8080/Demo/getThongTinKhachSan.php?id=" + global.idKS)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({

@@ -49,7 +49,7 @@ export default class Details extends Component {
 
     loadData() {
       
-        fetch("http://192.168.1.174:8080/Demo/getHinhAnh.php?id=" + this.props.navigation.state.params.id)
+        fetch("http://192.168.1.88:8080/Demo/getHinhAnh.php?id=" + this.props.navigation.state.params.id)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
