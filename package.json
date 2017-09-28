@@ -11,8 +11,10 @@
     "react-native": "0.48.1",
     "react-native-flexi-radio-button": "^0.2.1",
     "react-native-popup-dialog": "^0.9.35",
+    "react-native-progress-circle": "^2.0.0",
     "react-native-simple-radio-button": "^2.6.1",
     "react-native-slider": "^0.11.0",
+    "react-native-star-rating": "^1.0.8",
     "react-navigation": "^1.0.0-beta.11",
     "rn-viewpager": "^1.2.4"
   },
