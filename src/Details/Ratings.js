@@ -31,13 +31,13 @@ export default class Ratings extends Component {
                 
                 const { mang } = this.state;
                 var maxId = Math.max.apply(null, mang.map(item => item.id)) + 1;
-                mang.unshift({ id: maxId, ten: 'ABC', binhluan: this.state.value });
-               
+                mang.unshift({ id: maxId, ten: 'ABC', binhluan: this.state.value, sodanhgia: 4 });
+                
                 this.setState({
                     mang,
                     value: '',
                 });
-                alert(this.state.mang[0].noidung);
+                
             }
             else{
                 alert('Bạn chưa đăng nhập .. ')
@@ -68,7 +68,9 @@ export default class Ratings extends Component {
           starCount: rating
         });
       }
-    
+    guiDanhGia() {
+        alert(this.state.starCount);
+    }
     componentDidMount() {
         this.loadData();
     }
@@ -92,7 +94,7 @@ export default class Ratings extends Component {
                                 <Text style={{ fontSize: 20 }}>{ this.state.diemso + '/100'}</Text>
                             </ProgressCircle>
                             <View style={{ flex: 2, paddingLeft: 10 }}>
-                                <Text>Chỉ số dựa trên 15 đánh giá của người dùng</Text>
+                                <Text>Chỉ số dựa trên {this.state.mang.length > 0 ? this.state.mang[0].sodanhgia : 0} đánh giá của người dùng</Text>
                                 <View style={{ paddingHorizontal: 30, paddingVertical: 10 }}>
                                     <StarRating
                                         starSize={25}
@@ -106,7 +108,11 @@ export default class Ratings extends Component {
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style ={{ padding: 7, paddingLeft: 10, backgroundColor: '#4267b2', borderRadius: 5, color: 'white' }}>  Gửi đánh giá của bạn  </Text>
+                                    <TouchableOpacity
+                                        onPress={() => { this.guiDanhGia() }}
+                                    >
+                                        <Text style={{ padding: 5, paddingLeft: 10, backgroundColor: '#4267b2', borderRadius: 5, color: 'white' }}>  Gửi đánh giá của bạn  </Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
@@ -119,7 +125,7 @@ export default class Ratings extends Component {
                                     onChangeText={(value) => this.setState({ value })}
                                     value={this.state.value}
                                     multiline={true}
-                                    numberOfLines = {3}
+                                    numberOfLines={3}
                                     onContentSizeChange={(event) => {
                                         this.setState({ height: event.nativeEvent.contentSize.height })
                                     }}

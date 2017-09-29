@@ -3,7 +3,7 @@ import {
     View,
     Text, Image, StyleSheet, TouchableOpacity, Slider, ScrollView
 } from 'react-native';
-
+import global from '../global';
 
 import vote1 from '../img/vote/Vote1.png';
 import vote1_Act from '../img/vote/Vote1_act.png';
@@ -54,7 +54,8 @@ export default class TopFilters extends Component {
             bar: false,
             gym: false,
             value: 0,
-            valuemax: 0
+            valuemax: 0,
+            valueText: ''
         };
     }
     render() {
@@ -62,35 +63,37 @@ export default class TopFilters extends Component {
             <ScrollView style ={{flex: 1}}>
                 <View style={styles.viewVote}>
                     <TouchableOpacity
-                        onPress={() => { this.setState({ vote1: !this.state.vote1 })}}
+                        onPress={() => { this.setState({ vote1: !this.state.vote1 });}}
                         style={styles.imgView}
                     >
                         <Image style = { styles.img }  source = { this.state.vote1 ? vote1_Act : vote1 } />
                     </TouchableOpacity>
                     
                     <TouchableOpacity
-                        onPress = { ()=>{ this.setState({ vote2:!this.state.vote2 }) }}
+                        onPress = { ()=>{ this.setState({ vote2:!this.state.vote2 });}}
                         style = { styles.imgView }
                     >
                         <Image style = { styles.img } source={ this.state.vote2 ? vote2_Act : vote2 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress = {() => { this.setState({ vote3: !this.state.vote3 })}}
+                        onPress = {() => { this.setState({ vote3: !this.state.vote3 }); }}
                         style = { styles.imgView }
                     >
                         <Image style={styles.img} source={ this.state.vote3 ? vote3_Act : vote3 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={()=>{ this.setState({ vote4:!this.state.vote4 }) }}
+                        onPress={()=>{ this.setState({ vote4:!this.state.vote4 }); }}
                         style={styles.imgView}
                     >
                         <Image style={styles.img}  source = { this.state.vote4 ? vote4_Act : vote4 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress = { ()=>{ this.setState({ vote5:!this.state.vote5 }) }}
+                        onPress = { ()=>{ 
+                                            this.setState({ vote5:!this.state.vote5 });
+                                        }}
                         style = { styles.imgView }
                     >
                         <Image style={styles.img}  source = { this.state.vote5 ? vote5_Act : vote5 } />
@@ -100,7 +103,16 @@ export default class TopFilters extends Component {
                 
                 <View style={[styles.viewVote2, { paddingTop: 15 }]}>
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ wifi: !this.state.wifi }) }}
+                        onPress={() => { 
+                            this.setState({ wifi: !this.state.wifi });
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.wifi)
+                                temp[0] = '1';
+                            else
+                                temp[0] = '0';
+
+                            global.loctiennghi = temp.join('');
+                        }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                 <Image source={this.state.wifi ? wifi_act : wifi} style={styles.img}/>
@@ -109,7 +121,16 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ wifi2: !this.state.wifi2 }) }}
+                        onPress={() => { 
+                            this.setState({ wifi2: !this.state.wifi2 }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.wifi2)
+                                temp[1] = '1';
+                            else
+                                temp[1] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.wifi2 ? wifi_act : wifi } style={styles.img}/>
@@ -118,7 +139,16 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ beboi: !this.state.beboi }) }}
+                        onPress={() => { 
+                            this.setState({ beboi: !this.state.beboi }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.beboi)
+                                temp[2] = '1';
+                            else
+                                temp[2] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                             <Image source={this.state.beboi ? beboi_ac : beboi} style={styles.img} />
@@ -127,7 +157,17 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ spa: !this.state.spa }) }}
+                        onPress={() => { 
+                            this.setState({ spa: !this.state.spa }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.spa)
+                                temp[3] = '1';
+                            else
+                                temp[3] = '0';
+
+                            global.loctiennghi = temp.join('');
+
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                             <Image source={this.state.spa ? spa_act : spa } style={styles.img}/>
@@ -136,7 +176,16 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ doxe: !this.state.doxe }) }}
+                        onPress={() => { 
+                            this.setState({ doxe: !this.state.doxe }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.doxe)
+                                temp[4] = '1';
+                            else
+                                temp[4] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.doxe ? doxe_ac : doxe } style={styles.img} />
@@ -147,7 +196,16 @@ export default class TopFilters extends Component {
 
                 <View style={styles.viewVote2}>
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ vatnuoi: !this.state.vatnuoi }) }}
+                        onPress={() => { 
+                            this.setState({ vatnuoi: !this.state.vatnuoi }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.vatnuoi)
+                                temp[5] = '1';
+                            else
+                                temp[5] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.vatnuoi ? vatnuoi_ac : vatnuoi } style={styles.img} />
@@ -156,7 +214,16 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ dieuhoa: !this.state.dieuhoa }) }}
+                        onPress={() => { 
+                            this.setState({ dieuhoa: !this.state.dieuhoa });
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.dieuhoa)
+                                temp[6] = '1';
+                            else
+                                temp[6] = '0';
+
+                            global.loctiennghi = temp.join(''); 
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.dieuhoa ? dieuhoa_ac : dieuhoa } style={styles.img} />
@@ -165,7 +232,16 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ nhahang: !this.state.nhahang }) }}
+                        onPress={() => { 
+                            this.setState({ nhahang: !this.state.nhahang }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.nhahang)
+                                temp[7] = '1';
+                            else
+                                temp[7] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.nhahang ? nhahang_ac : nhahang } style={styles.img} />
@@ -174,7 +250,16 @@ export default class TopFilters extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ bar: !this.state.bar }) }}
+                        onPress={() => { 
+                            this.setState({ bar: !this.state.bar }) 
+                            var temp = global.loctiennghi.split('');
+                            if(!this.state.bar)
+                                temp[8] = '1';
+                            else
+                                temp[8] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.bar ? bar_ac : bar } style={styles.img} />
@@ -182,8 +267,18 @@ export default class TopFilters extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => { this.setState({ gym: !this.state.gym }) }}
+                    <TouchableOpacity 
+                        style={{ flex: 1 }}
+                        onPress={() => { 
+                            this.setState({ gym: !this.state.gym }) 
+                            let temp = global.loctiennghi.split('');
+                            if(!this.state.gym)
+                                temp[9] = '1';
+                            else
+                                temp[9] = '0';
+
+                            global.loctiennghi = temp.join('');
+                            }}
                     >
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={this.state.gym ? gym_ac : gym} style={styles.img} />
@@ -195,30 +290,35 @@ export default class TopFilters extends Component {
                 <View style={{ height: 1, backgroundColor: 'gray' }} />
 
                 <View style={{ paddingVertical: 10, padding: 10 }}>
-                    <Text>Giá tối thiểu: {this.state.value} VNĐ</Text>
+                    <Text>Giá tối thiểu: {this.state.value} VNĐ </Text>
                 <Slider
-                    
                     minimumValue={0}
-                    maximumValue={50000}
+                    maximumValue={5000000}
                     step={1}
-                    thumbTouchSize = {{width: 50, height: 50}}
-                    onValueChange={value => this.setState({ value })}
+                    thumbTouchSize = {{ width: 100, height: 100 }}
+                    onValueChange={(value) => { this.setState({ value });
+                                                global.locgiamin = value;
+                                              }
+                                    }
                     
                     />
                 </View>
                 <View style={{ height: 1, backgroundColor: 'gray' }} />
 
-                <View style={{ paddingVertical: 10 , padding: 10 }}>
+                <View style={{ paddingVertical: 10, padding: 10 }}>
                     <Text>Giá tối đa: {this.state.valuemax} VNĐ</Text>
                 <Slider
                     
                     minimumValue={0}
-                    maximumValue={50000}
+                    maximumValue={5000000}
                     step={1}
-                    thumbTouchSize = {{width: 50, height: 50}}
-                    onValueChange={value => this.setState({ valuemax: value })}
-                    
-                    />
+                    thumbTouchSize={{ width: 50, height: 50 }}
+                    onValueChange={(value) => {
+                                                this.setState({ valuemax: value });
+                                                global.locgiamax = value;
+                                             }
+                                   }
+                />
                 </View>
 
             </ScrollView>

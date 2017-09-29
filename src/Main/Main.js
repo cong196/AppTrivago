@@ -35,7 +35,9 @@ export default class Main extends Component {
             page: 1
         };
         global.searchData = this.loadDataFromSearch.bind(this);
-        
+        global.loctiennghi = '0000000000';
+        global.locgiamax = 0;
+        global.locgiamin = 0;
     }
 
     componentDidMount() {
