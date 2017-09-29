@@ -22,7 +22,7 @@ export const MainStack = StackNavigator({
     AccountScreen: {
         screen: Account,
         navigationOptions: {
-            headerTitle: 'My favorite hotels'
+            headerTitle: 'Tài khoản'
         }
     },
     SearchScreen: {

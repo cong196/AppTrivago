@@ -38,6 +38,7 @@ export default class Main extends Component {
         global.loctiennghi = '0000000000';
         global.locgiamax = 0;
         global.locgiamin = 0;
+        global.isdangnhap = false;
     }
 
     componentDidMount() {
