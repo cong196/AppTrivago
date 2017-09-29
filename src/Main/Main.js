@@ -41,10 +41,12 @@ export default class Main extends Component {
     }
 
     componentDidMount() {
-        this.loadData(1);
+        this.loadData(this.state.page);
+       
    }
     
     refresh() {
+        this.setState({ page: 1, mang: [] });
         this.loadDataRefresh();
     }
 
@@ -52,7 +54,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true
         })
-        fetch("http://192.168.1.173/Flatlist/demo3.php?trang="+1)
+        fetch("http://192.168.1.173:8080/Demo/getListKhachSan.php?trang=1")
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -77,7 +79,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true,
         })
-        fetch("http://192.168.1.88:8080/Flatlist/demo3.php?trang="+page)
+        fetch("http://192.168.1.173:8080/Flatlist/demo3.php?trang="+page)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -89,11 +91,7 @@ export default class Main extends Component {
         .catch((e)=>{console.log(e)});
     }
     loadMore() {
-        //alert("chạm đáy");
-        // this.setState({
-        //     page: this.state.page + 1
-        // }),
-        this.loadData(this.state.page + 1);
+        this.loadData(this.state.page);
     }
     onSelect(index) {
         this.popupDialog.dismiss(() => {
@@ -107,20 +105,26 @@ export default class Main extends Component {
                 this.setState({
                     refresh: true
                 })
-                fetch("http://192.168.1.88:8080/Demo/demo1.php")
+                fetch("http://192.168.1.173:8080/Demo/getListKhachSan.php?trang=" + page)
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    this.setState({
-                        mang: this.state.mang.concat(responseJson),
-                        refresh: false,
-                        page: this.state.page + 1
-                    });
+                    if(responseJson.length > 0)
+                        this.setState({
+                            mang: this.state.mang.concat(responseJson),
+                            refresh: false,
+                            page: this.state.page + 1
+                        });
+                    else{
+                        this.setState({ 
+                            refresh: false,
+                        });
+                    }
                 })
                 .catch((e) => { console.log(e) });
             }
 
     testt(){
-        alert(this.state.mang.length)
+        alert(this.state.page)
     }
     render() {
         const { navigate } = this.props.navigation;
