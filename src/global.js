@@ -6,5 +6,8 @@ module.export = {
     locgiamin: 0,
     locsao: 0,
     isdangnhap: null,
-    quyen: null
+    quyen: null,
+    locDL : false,
+    trangloc: 1,
+    loadDuLieuLoc: null
 }

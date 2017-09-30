@@ -42,15 +42,18 @@ export default class Main extends Component {
         global.isdangnhap = false;
         global.quyen = 0;
         global.locsao = '';
+        global.locDL = false;
+        global.loadDuLieuLoc = this.loadDataLoc.bind(this);
+        global.trangloc = 1;
     }
 
     componentDidMount() {
         this.loadData(this.state.page);
        
-   }
-    
+    }
     refresh() {
         this.setState({ page: 1, mang: [], load1: true });
+        global.locDL = false;
         this.loadDataRefresh();
     }
 
@@ -107,7 +110,7 @@ export default class Main extends Component {
     }
     showModal = () => this.setState({ isModalVisible: true });
     loadData(page) {
-        if (this.state.load1) {
+        if (global.locDL === false) {
                 this.setState({
                     refresh: true
                 })
@@ -129,14 +132,58 @@ export default class Main extends Component {
                 .catch((e) => { console.log(e) });
         }
         else{
-            alert('load lọc');
+            alert(global.trangloc + '----' + global.loctiennghi + '---'+global.locsao);
+            this.setState({
+                refresh: true
+            })
+            fetch("http://192.168.1.173:8080/Demo/getListKhachSanLoc.php?trang=" + global.trangloc + "&tiennghi=" + global.loctiennghi + "&sosao=" + global.locsao)
+            .then((response) =>  response.json() )
+            .then((responseJson) => {
+                if(responseJson.length > 0)
+                    // this.setState({
+                    //     mang: this.state.mang.concat(responseJson),
+                    //     refresh: false,
+                    //     //page: this.state.page + 1
+                    // });
+                    // global.trangloc
+                    if( global.trangloc===1 ) {
+                        this.setState({
+                                 mang: responseJson,
+                                 refresh: false,
+                                 //page: this.state.page + 1
+                             });
+                    }
+                    else{
+                        this.setState({
+                            mang: this.state.mang.concat(responseJson),
+                            refresh: false,
+                            //page: this.state.page + 1
+                        });
+                    }
+                else{
+                    this.setState({ 
+                        refresh: false,
+                    });
+                }
+            }) 
+            .catch((e) => { 
+                alert(e) 
+            });
         }
         
     }
     testt(){
-        alert(this.state.page);
+        //alert(this.state.page);
+        alert(this.state.load1 + ' -- ' + this.state.page);
+        this.setState({ load1: false, page: 1 });
+        
     }
-    
+    loadDataLoc() {
+        //alert(global.loctiennghi + ' - ' + global.locgiamax + ' - ' + global.locgiamin + ' - ' + global.locsao);
+        //this.setState({ load1: false, page: 1 });
+        this.props.navigation.navigate('DrawerClose');
+       this.loadData();
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -161,7 +208,7 @@ export default class Main extends Component {
                     <View style={{ flex: 4, justifyContent: 'space-between', flexDirection: 'row', paddingRight: 5 }}>
                         <Image style={styles.imgHeader} source={icsearch} />
                         <TouchableOpacity
-                            onPress={()=>{this.clickMap()}}                        
+                            onPress={()=>{ this.clickMap() }}                        
                         >
                             <Image style={styles.imgHeader} source={icMap} />
                         </TouchableOpacity>

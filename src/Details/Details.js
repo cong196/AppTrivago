@@ -48,7 +48,6 @@ export default class Details extends Component {
     }
 
     loadData() {
-      
         fetch("http://192.168.1.173:8080/Demo/getHinhAnh.php?id=" + this.props.navigation.state.params.id)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -56,8 +55,7 @@ export default class Details extends Component {
                 mang: responseJson,
                 item: this.state.mang.length,
                 islove: false
-            });
-            
+            });  
         })
         .catch((e) => { console.log(e) });
         
