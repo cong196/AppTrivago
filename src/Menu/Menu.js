@@ -7,7 +7,8 @@ import global from '../global';
 export default class Menu extends Component {
 
     loadDL() {
-        alert(global.loctiennghi + ' - ' + global.locgiamax + ' - ' + global.locgiamin);
+        alert(global.loctiennghi + ' - ' + global.locgiamax + ' - ' + global.locgiamin + ' - ' + global.locsao);
+        this.props.navigation.navigate('DrawerClose');
     }
     render() {
         return (

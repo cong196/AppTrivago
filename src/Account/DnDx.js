@@ -34,7 +34,7 @@ export default class DnDx extends Component {
         } = styles;
 
         const { isSignIn } = this.state;
-        const mainJSX = isSignIn ? <DangNhap /> : <DangKy />;
+        const mainJSX = isSignIn ? <DangNhap goBack={this.props.goBack.bind(this)} /> : <DangKy />;
         return (
             <View style={container}>
                 {/* <View style={row1}>

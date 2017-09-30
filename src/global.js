@@ -4,5 +4,7 @@ module.export = {
     loctiennghi: null,
     locgiamax: 0,
     locgiamin: 0,
-    isdangnhap: null
+    locsao: 0,
+    isdangnhap: null,
+    quyen: null
 }

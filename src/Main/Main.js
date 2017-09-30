@@ -32,13 +32,16 @@ export default class Main extends Component {
             heigthmapview: 0,
             isModalVisible: false,
             sortIndex: 0,
-            page: 1
+            page: 1,
+            load1: true
         };
         global.searchData = this.loadDataFromSearch.bind(this);
         global.loctiennghi = '0000000000';
         global.locgiamax = 0;
         global.locgiamin = 0;
         global.isdangnhap = false;
+        global.quyen = 0;
+        global.locsao = '';
     }
 
     componentDidMount() {
@@ -47,7 +50,7 @@ export default class Main extends Component {
    }
     
     refresh() {
-        this.setState({ page: 1, mang: [] });
+        this.setState({ page: 1, mang: [], load1: true });
         this.loadDataRefresh();
     }
 
@@ -62,6 +65,7 @@ export default class Main extends Component {
                 mang: responseJson,
                 refresh: false,
                 page: 1,
+                load1: true
             });
         })
         .catch((e)=>{console.log(e)});
@@ -103,6 +107,7 @@ export default class Main extends Component {
     }
     showModal = () => this.setState({ isModalVisible: true });
     loadData(page) {
+        if (this.state.load1) {
                 this.setState({
                     refresh: true
                 })
@@ -122,11 +127,16 @@ export default class Main extends Component {
                     }
                 })
                 .catch((e) => { console.log(e) });
-            }
-
-    testt(){
-        alert(this.state.page)
+        }
+        else{
+            alert('load lọc');
+        }
+        
     }
+    testt(){
+        alert(this.state.page);
+    }
+    
     render() {
         const { navigate } = this.props.navigation;
         return (

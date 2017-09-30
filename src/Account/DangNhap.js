@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import global from '../global';
-
+import { DangNhapModule } from '../api/DangNhap';
 export default class DangNhap extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +11,32 @@ export default class DangNhap extends Component {
         };
     }
 
+    dangNhap1() {
+        // this.props.goBack();
+        // global.isdangnhap = true;
+        // global.quyen = 1;
+        // DangNhapModule(this.state.username, this.state.password)
+        // .then(res => {
+        //     alert(res);
+        // })
+        // .catch(err => alert(err));
+
+
+        fetch('http://192.168.1.173:8080/Demo/DangNhap.php',
+        {   
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify(this.state.username, this.state.password)
+        })
+        .then(res => res.text())
+        .then(res => {
+            alert(res);
+        })
+        .catch(err => alert(err));
+    }
     render() {
         const { inputStyle, bigButton, buttonText } = styles;
         const { username, password } = this.state;
@@ -31,7 +57,7 @@ export default class DangNhap extends Component {
                     onChangeText={text => this.setState({ password: text })}
                     secureTextEntry
                 />
-                <TouchableOpacity style={bigButton} onPress={()=>{}}>
+                <TouchableOpacity style={bigButton} onPress={() => { this.dangNhap1() }}>
                     <Text style={buttonText}>Đăng nhập</Text>
                 </TouchableOpacity>
             </View>

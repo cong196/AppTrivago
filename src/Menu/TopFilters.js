@@ -63,28 +63,52 @@ export default class TopFilters extends Component {
             <ScrollView style ={{flex: 1}}>
                 <View style={styles.viewVote}>
                     <TouchableOpacity
-                        onPress={() => { this.setState({ vote1: !this.state.vote1 });}}
+                        onPress={() => { 
+                                        this.setState({ vote1: !this.state.vote1 });
+                                        if(!this.state.vote1)
+                                            global.locsao = global.locsao + '1';
+                                        else
+                                            global.locsao = global.locsao.replace(/1/g, '');
+                                        }}
                         style={styles.imgView}
                     >
                         <Image style = { styles.img }  source = { this.state.vote1 ? vote1_Act : vote1 } />
                     </TouchableOpacity>
                     
                     <TouchableOpacity
-                        onPress = { ()=>{ this.setState({ vote2:!this.state.vote2 });}}
+                        onPress = { ()=>{ 
+                                            this.setState({ vote2:!this.state.vote2 });
+                                            if(!this.state.vote2)
+                                                global.locsao = global.locsao + '2';
+                                            else
+                                                global.locsao = global.locsao.replace(/2/g, '');
+                                        }}
                         style = { styles.imgView }
                     >
                         <Image style = { styles.img } source={ this.state.vote2 ? vote2_Act : vote2 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress = {() => { this.setState({ vote3: !this.state.vote3 }); }}
+                        onPress = {() => { 
+                                            this.setState({ vote3: !this.state.vote3 });
+                                            if(!this.state.vote3)
+                                                global.locsao = global.locsao + '3';
+                                            else
+                                                global.locsao = global.locsao.replace(/3/g, '');
+                                    }}
                         style = { styles.imgView }
                     >
                         <Image style={styles.img} source={ this.state.vote3 ? vote3_Act : vote3 } />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={()=>{ this.setState({ vote4:!this.state.vote4 }); }}
+                        onPress={()=>{ 
+                                         this.setState({ vote4:!this.state.vote4 }); 
+                                         if(!this.state.vote4)
+                                                global.locsao = global.locsao + '4';
+                                        else
+                                                global.locsao = global.locsao.replace(/4/g, '');
+                            }}
                         style={styles.imgView}
                     >
                         <Image style={styles.img}  source = { this.state.vote4 ? vote4_Act : vote4 } />
@@ -93,6 +117,10 @@ export default class TopFilters extends Component {
                     <TouchableOpacity
                         onPress = { ()=>{ 
                                             this.setState({ vote5:!this.state.vote5 });
+                                            if(!this.state.vote5)
+                                                global.locsao = global.locsao + '5';
+                                            else
+                                                global.locsao = global.locsao.replace(/5/g, '');
                                         }}
                         style = { styles.imgView }
                     >
