@@ -137,6 +137,9 @@ export default class Main extends Component {
             }
         }
         else {
+            if(global.locsao == ''){
+                global.locsao = 12345
+            }
            if(this.state.refresh === false) {
                 this.setState({
                     refresh: true,

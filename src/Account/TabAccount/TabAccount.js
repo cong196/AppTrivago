@@ -8,7 +8,7 @@ import global from '../../global';
 export default class QuanLyKhachSan extends Component {
     render() {
         return (
-            global.quyen === 1 ? <TbAccountAdmin /> : <TbAccount />
+            global.quyen == 1 ? <TbAccountAdmin /> : <TbAccount />
         )
     }
 }

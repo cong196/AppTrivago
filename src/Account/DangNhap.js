@@ -7,7 +7,8 @@ export default class DangNhap extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            mang: []
         };
     }
 
@@ -22,20 +23,42 @@ export default class DangNhap extends Component {
         // .catch(err => alert(err));
 
 
-        fetch('http://192.168.1.173:8080/Demo/DangNhap.php',
-        {   
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            },
-            body: JSON.stringify(this.state.username, this.state.password)
+        // fetch(global.server.concat('/DangNhap.php'),
+        // {   
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Accept: 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         username: this.state.username,
+        //         password: this.state.password
+        //     })
+        // })
+        // .then(res => res.json())
+        // .then(res => {
+        //     alert(res);
+        // })
+        // .catch(err => alert(err));
+
+        fetch(global.server.concat('dangNhap.php?username='+this.state.username+'&password='+this.state.password))
+        .then((response) => response.json())
+        .then((responseJson) => {
+            
+            if(responseJson.length > 0){
+                this.setState({
+                    mang: responseJson,
+                });
+                global.isdangnhap = true;
+                global.quyen = this.state.mang[0].quyen;
+                this.props.goBack();
+            }
+            else{
+                alert('Sai thong tin dang nhap');
+            }
+            
         })
-        .then(res => res.text())
-        .then(res => {
-            alert(res);
-        })
-        .catch(err => alert(err));
+        .catch((e)=>{alert(e)});
     }
     render() {
         const { inputStyle, bigButton, buttonText } = styles;
