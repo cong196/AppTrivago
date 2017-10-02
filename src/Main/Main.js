@@ -45,6 +45,7 @@ export default class Main extends Component {
         global.locDL = false;
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
+        global.server = 'http://192.168.1.174:8080/Demo/';
     }
 
     componentDidMount() {
@@ -61,7 +62,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true
         })
-        fetch("http://192.168.1.173:8080/Demo/getListKhachSan.php?trang=1")
+        fetch(global.server.concat('getListKhachSan.php?trang=1'))
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -99,6 +100,7 @@ export default class Main extends Component {
         .catch((e)=>{console.log(e)});
     }
     loadMore() {
+        //alert('load thêm');
         this.loadData(this.state.page);
     }
     onSelect(index) {
@@ -111,10 +113,12 @@ export default class Main extends Component {
     showModal = () => this.setState({ isModalVisible: true });
     loadData(page) {
         if (global.locDL === false) {
+            if (this.state.refresh === false) {
+                global.trangloc = 1;
                 this.setState({
                     refresh: true
                 })
-                fetch("http://192.168.1.173:8080/Demo/getListKhachSan.php?trang=" + page)
+                fetch(global.server.concat('getListKhachSan.php?trang=') + page)
                 .then((response) => response.json())
                 .then((responseJson) => {
                     if(responseJson.length > 0)
@@ -130,45 +134,46 @@ export default class Main extends Component {
                     }
                 })
                 .catch((e) => { console.log(e) });
+            }
         }
-        else{
-            alert(global.trangloc + '----' + global.loctiennghi + '---'+global.locsao);
-            this.setState({
-                refresh: true
-            })
-            fetch("http://192.168.1.173:8080/Demo/getListKhachSanLoc.php?trang=" + global.trangloc + "&tiennghi=" + global.loctiennghi + "&sosao=" + global.locsao)
-            .then((response) =>  response.json() )
-            .then((responseJson) => {
-                if(responseJson.length > 0)
-                    // this.setState({
-                    //     mang: this.state.mang.concat(responseJson),
-                    //     refresh: false,
-                    //     //page: this.state.page + 1
-                    // });
-                    // global.trangloc
-                    if( global.trangloc===1 ) {
-                        this.setState({
-                                 mang: responseJson,
-                                 refresh: false,
-                                 //page: this.state.page + 1
-                             });
+        else {
+           if(this.state.refresh === false) {
+                this.setState({
+                    refresh: true,
+                })
+                fetch(global.server + 'getListKhachSanLoc.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao)
+                .then((response) =>  response.json() )
+                .then((responseJson) => {
+                    if (responseJson.length > 0) {
+                        if ( global.trangloc === 1 ) {
+                            this.setState({
+                                    mang: responseJson,
+                                    refresh: false,
+                                    //page: this.state.page + 1
+                                });
+                        }
+                        else{
+                            this.setState({
+                                mang: this.state.mang.concat(responseJson),
+                                refresh: false,
+                                //page: this.state.page + 1
+                            });
+                        }
+                        global.trangloc = global.trangloc + 1;
                     }
                     else{
-                        this.setState({
-                            mang: this.state.mang.concat(responseJson),
-                            refresh: false,
-                            //page: this.state.page + 1
-                        });
+                        if(global.trangloc === 1){
+                            this.setState({mang:[]})
+                        }
+                            this.setState({ 
+                                refresh: false,
+                            });
                     }
-                else{
-                    this.setState({ 
-                        refresh: false,
-                    });
-                }
-            }) 
-            .catch((e) => { 
-                alert(e) 
-            });
+                }) 
+                .catch((e) => { 
+                    alert(e) 
+                });
+            }
         }
         
     }

@@ -49,7 +49,7 @@ export default class Ratings extends Component {
     }
 
     loadData() {
-        fetch("http://192.168.1.173:8080/Demo/getBinhLuan.php?id=" + global.idKS + "&trang=" + this.state.page)
+        fetch( global.server.concat('getBinhLuan.php?id=' + global.idKS + "&trang=" + this.state.page))
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({

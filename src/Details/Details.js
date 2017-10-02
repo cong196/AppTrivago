@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, StyleSheet, Dimensions, TouchableOpacity,Image
 } from 'react-native';
+import global from '../global';
 import { TbDetails } from './RouterDetails';
 const { height, width } = Dimensions.get('window');
 import {IndicatorViewPager, PagerDotIndicator } from 'rn-viewpager';
@@ -48,7 +49,7 @@ export default class Details extends Component {
     }
 
     loadData() {
-        fetch("http://192.168.1.173:8080/Demo/getHinhAnh.php?id=" + this.props.navigation.state.params.id)
+        fetch(global.server.concat('getHinhAnh.php?id=' + this.props.navigation.state.params.id))
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({

@@ -9,5 +9,6 @@ module.export = {
     quyen: null,
     locDL : false,
     trangloc: 1,
-    loadDuLieuLoc: null
+    loadDuLieuLoc: null,
+    server: null
 }
