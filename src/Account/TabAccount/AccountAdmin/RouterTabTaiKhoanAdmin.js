@@ -7,10 +7,11 @@ import { TabNavigator } from 'react-navigation';
 import QuanLyKhachSan from './QuanLyKhachSan';
 import DuyetKhachSan from './DuyetKhachSan';
 import QuanLyTaiKhoan from '../AccountMember/QuanLyTaiKhoan';
+import {QuanLyKhachSanAdminRouter} from './Router';
 export const TbAccountAdmin = TabNavigator(
     {
         TabDuyetKhachSan: {
-            screen: DuyetKhachSan,
+            screen: QuanLyKhachSanAdminRouter,
             navigationOptions: {
                 tabBarLabel: 'Chờ duyệt',
             }

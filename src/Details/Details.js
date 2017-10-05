@@ -36,7 +36,7 @@ export default class Details extends Component {
         //     id: this.props.navigation.state.params.id
         // })
 
-        this.loadData();
+        //this.loadData();
     }
     // componentWillMount(){
     //     this.loadData();
@@ -98,9 +98,13 @@ export default class Details extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                {
+
+
+                {/* {
                     this.state.mang.length ? lst : null
-                }
+                } */}
+
+
                 <View style={{ flex: 1 }}>
                    <TbDetails />
                 </View>

@@ -41,7 +41,7 @@ export default class DangNhap extends Component {
         // })
         // .catch(err => alert(err));
 
-        fetch(global.server.concat('dangNhap.php?username='+this.state.username+'&password='+this.state.password))
+        fetch(global.server.concat('dangNhap.php?username=' + this.state.username+'&password='+this.state.password))
         .then((response) => response.json())
         .then((responseJson) => {
             

@@ -6,6 +6,7 @@ import { TabNavigator } from 'react-navigation';
 import Details_Info from './Details_Info';
 import Ratings from './Ratings';
 import MapView from './MapView';
+import Images from './Images';
 export const TbDetails = TabNavigator(
     {
         TabDetails: {
@@ -18,6 +19,12 @@ export const TbDetails = TabNavigator(
             screen: Ratings,
             navigationOptions: {
                 tabBarLabel: 'Bình Luận'
+            }
+        },
+        TabImages: {
+            screen: Images,
+            navigationOptions: {
+                tabBarLabel: 'Hình ảnh'
             }
         },
         TabMapView: {
