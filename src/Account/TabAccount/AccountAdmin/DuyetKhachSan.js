@@ -14,13 +14,15 @@ export default class DuyetKhachSan extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mang: [{"key":"1","ten":"Les Hameaux de l Orient","hinh":"https:\/\/imgec.trivago.com\/partnerimages\/17\/77\/177750770_x.jpeg","diachi":"Rang Hamlet, 70000, TP. H\u1ed3 Ch\u00ed Minh, Vi\u1ec7t Nam","gia":"1587000"}],
+            mang: [],
             value: '',
             height: 40,
             isOpen: false,
             isDisabled: false,
             swipeToClose: true,
-            sliderValue: 0.3
+            sliderValue: 0.3,
+            page: 1,
+            refresh: false
         }
     }
    
@@ -35,12 +37,63 @@ export default class DuyetKhachSan extends Component {
         alert(this.state.value);
         this.setState({value: ''})
     }
+
+    refresh() {
+        this.setState({ page: 1, mang: []});
+        this.loadDataRefresh();
+    }
+
+    loadDataRefresh(){
+        this.setState({
+            refresh: true
+        })
+        fetch(global.server.concat('getDanhSachChoDuyet.php?trang=1'))
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                mang: responseJson,
+                refresh: false,
+                page: 1
+            });
+        })
+        .catch((e)=>{console.log(e)});
+    }
+
+    loadKhachSanDuyet() {
+        if (this.state.refresh === false) {
+            global.trangloc = 1;
+            this.setState({
+                refresh: true
+            })
+            fetch(global.server.concat('getDanhSachChoDuyet.php?trang=') + this.state.page)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if(responseJson.length > 0)
+                    this.setState({
+                        mang: this.state.mang.concat(responseJson),
+                        refresh: false,
+                        page: this.state.page + 1
+                    });
+                else{
+                    this.setState({ 
+                        refresh: false,
+                    });
+                }
+            })
+            .catch((e) => { console.log(e) });
+        }
+    }
+    componentDidMount() {
+        this.loadKhachSanDuyet();
+    }
+    
     render() {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <FlatList
-                   
+                    refreshing={this.state.refresh}
+                    onRefresh={() => { this.refresh() }}
                     data={this.state.mang}
                     renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
