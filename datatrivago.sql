@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2017 at 09:02 PM
+-- Generation Time: Oct 07, 2017 at 10:00 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -25,22 +25,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblbinhluan`
+-- Table structure for table `binhluan`
 --
 
-CREATE TABLE `tblbinhluan` (
-  `idKS` int(11) NOT NULL,
-  `idNguoi` int(11) NOT NULL,
+CREATE TABLE `binhluan` (
+  `idks` int(11) NOT NULL,
+  `iduser` int(11) NOT NULL,
   `NoiDung` text NOT NULL,
   `Ngay` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tblbinhluan`
+-- Dumping data for table `binhluan`
 --
 
-INSERT INTO `tblbinhluan` (`idKS`, `idNguoi`, `NoiDung`, `Ngay`, `id`) VALUES
+INSERT INTO `binhluan` (`idks`, `iduser`, `NoiDung`, `Ngay`, `id`) VALUES
 (1, 1, 'Chất lượng tốt, View Đẹp', '2017-09-21 09:54:10', 1),
 (1, 1, 'Lần 2 đến đây chất lượng tăng lên', '2017-09-21 10:01:34', 3),
 (2, 1, 'View đẹp, tiện nghi đầy đủ', '2017-09-21 10:05:57', 5),
@@ -63,42 +63,43 @@ INSERT INTO `tblbinhluan` (`idKS`, `idNguoi`, `NoiDung`, `Ngay`, `id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbldanhgia`
+-- Table structure for table `danhgia`
 --
 
-CREATE TABLE `tbldanhgia` (
-  `idKS` int(11) NOT NULL,
-  `idNguoi` int(11) NOT NULL,
+CREATE TABLE `danhgia` (
+  `id` int(11) NOT NULL,
+  `idks` int(11) NOT NULL,
+  `iduser` int(11) NOT NULL,
   `danhgia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tbldanhgia`
+-- Dumping data for table `danhgia`
 --
 
-INSERT INTO `tbldanhgia` (`idKS`, `idNguoi`, `danhgia`) VALUES
-(1, 1, 5),
-(1, 2, 5),
-(1, 3, 4),
-(1, 4, 2);
+INSERT INTO `danhgia` (`id`, `idks`, `iduser`, `danhgia`) VALUES
+(1, 1, 1, 5),
+(2, 1, 2, 5),
+(3, 1, 3, 4),
+(4, 1, 4, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblimage`
+-- Table structure for table `hinhanh`
 --
 
-CREATE TABLE `tblimage` (
+CREATE TABLE `hinhanh` (
   `id` int(11) NOT NULL,
   `idks` int(11) NOT NULL,
   `link` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tblimage`
+-- Dumping data for table `hinhanh`
 --
 
-INSERT INTO `tblimage` (`id`, `idks`, `link`) VALUES
+INSERT INTO `hinhanh` (`id`, `idks`, `link`) VALUES
 (1, 1, 'https://imgec.trivago.com/partnerimages/13/67/136724066_x.jpeg'),
 (3, 1, 'https://imgec.trivago.com/partnerimages/13/67/136724158_x.jpeg'),
 (4, 1, 'https://imgec.trivago.com/partnerimages/13/67/136724128_x.jpeg'),
@@ -108,10 +109,10 @@ INSERT INTO `tblimage` (`id`, `idks`, `link`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblkhachsan`
+-- Table structure for table `khachsan`
 --
 
-CREATE TABLE `tblkhachsan` (
+CREATE TABLE `khachsan` (
   `id` int(11) NOT NULL,
   `ten` text NOT NULL,
   `gia` float NOT NULL,
@@ -122,105 +123,216 @@ CREATE TABLE `tblkhachsan` (
   `sosao` int(11) NOT NULL,
   `sdt` text NOT NULL,
   `tiennghihangdau` text NOT NULL,
-  `ngaycapnhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `ngaycapnhat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user` int(11) NOT NULL,
+  `tinhtrang` int(11) NOT NULL,
+  `daduyet` int(11) NOT NULL,
+  `lat` float NOT NULL,
+  `long` float NOT NULL,
+  `idvung` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tblkhachsan`
+-- Dumping data for table `khachsan`
 --
 
-INSERT INTO `tblkhachsan` (`id`, `ten`, `gia`, `hinhanh`, `diachi`, `loai`, `website`, `sosao`, `sdt`, `tiennghihangdau`, `ngaycapnhat`) VALUES
-(1, 'Lakeview Villas And Viet Nam', 2455600, 'https://imgec.trivago.com/partnerimages/18/02/180235620_x.jpeg', '15 Tran Phu Street, 670000, Đà Lạt, Việt Nam', 'Khách sạn', 'lakeviewvillas.com', 1, '0969340321', '1100101100', '2017-09-29 16:39:44'),
-(5, 'Ngoc Phat', 1336300, 'https://imgec.trivago.com/partnerimages/22/00/220066432_x.jpeg', '10 Hồ Tùng Mậu, 670000, Đà Lạt, Việt Nam', '', '', 2, '', '', '2017-09-29 15:38:48'),
-(6, 'The Sailing Bay Beach Resort', 1603400, 'https://imgec.trivago.com/partnerimages/19/00/190043264_x.jpeg', '170 Ho Xuan Huong, 800000, Mũi Né, Việt Nam', '', '', 4, '', '', '2017-09-29 14:37:44'),
-(7, 'Sea Links Beach', 2375900, 'https://imgec.trivago.com/partnerimages/11/09/110997336_x.jpeg', 'Km 9 Nguyen Thong, 800000, Mũi Né, Việt Nam', '', '', 3, '', '', '2017-09-29 14:37:44'),
-(8, 'Binh An Village Dalat', 3614000, 'https://imgec.trivago.com/partnerimages/14/44/144493300_x.jpeg', 'Plot Number 6, Area 162,Tuyen Lam Lake, 670000, Đà Lạt, Việt Nam', 'Khách sạn', 'binhanvillage.com.vn', 4, '08999999999', '1110010110', '2017-09-29 15:09:07'),
-(9, 'Six Senses Ninh Van Bay', 8139500, 'https://imgec.trivago.com/gtximages/partnerimages/11/04/110484146_y@2x.jpeg', 'Ninh Van bay, Ninh Hoa, Khanh Hoa, 650000, Nha Trang, Việt Nam', 'Resort', 'SixSensesNinhVanBay.com', 5, '+109845933920', '1100101110', '2017-09-30 17:19:12'),
-(10, 'Lavender Nha Trangy', 577000, 'https://imgec.trivago.com/partnerimages/14/50/145036042_x.jpeg', '98C/4 Tran Phu St. Loc Tho Ward, 62000, Nha Trang, Việt Nam', 'Khách sạn', 'LavenderNhaTrang.com', 5, '+109845933920', '1110101110', '2017-09-30 17:27:23'),
-(11, 'Mia Resort Nha Trang', 5377000, 'https://imgec.trivago.com/partnerimages/14/42/144280106_x.jpeg', 'Bai Dong, Cam Hai Dong, 650000, Nha Trang, Việt Nam', 'Resort', 'MiaResortNhaTrang.com', 1, '+109845933920', '1111101110', '2017-09-30 17:27:23'),
-(12, 'Riverside', 979000, 'https://imgec.trivago.com/partnerimages/13/87/138768540_x.jpeg', '18-19-20 Ton Duc Thang Street, District 1, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'Riverside.com', 1, '+109845933920', '1100101110', '2017-09-30 17:27:23');
+INSERT INTO `khachsan` (`id`, `ten`, `gia`, `hinhanh`, `diachi`, `loai`, `website`, `sosao`, `sdt`, `tiennghihangdau`, `ngaycapnhat`, `user`, `tinhtrang`, `daduyet`, `lat`, `long`, `idvung`) VALUES
+(1, 'Lakeview Villas And Viet Nam', 2455600, 'https://imgec.trivago.com/partnerimages/18/02/180235620_x.jpeg', '15 Tran Phu Street, 670000, Đà Lạt, Việt Nam', 'Khách sạn', 'lakeviewvillas.com', 1, '0969340321', '1100101100', '2017-10-05 16:39:44', 0, 1, 0, 0, 0, 0),
+(5, 'Ngoc Phat', 1336300, 'https://imgec.trivago.com/partnerimages/22/00/220066432_x.jpeg', '10 Hồ Tùng Mậu, 670000, Đà Lạt, Việt Nam', '', '', 2, '', '', '2017-09-29 15:38:48', 0, 1, 0, 0, 0, 0),
+(6, 'The Sailing Bay Beach Resort', 1603400, 'https://imgec.trivago.com/partnerimages/19/00/190043264_x.jpeg', '170 Ho Xuan Huong, 800000, Mũi Né, Việt Nam', '', '', 4, '', '1100101110', '2017-09-29 14:37:44', 1, 1, 0, 0, 0, 0),
+(7, 'Sea Links Beach', 2375900, 'https://imgec.trivago.com/partnerimages/11/09/110997336_x.jpeg', 'Km 9 Nguyen Thong, 800000, Mũi Né, Việt Nam', '', '', 3, '', '1100101110', '2017-09-29 14:37:44', 0, 1, 0, 0, 0, 0),
+(8, 'Binh An Village Dalat', 3614000, 'https://imgec.trivago.com/partnerimages/14/44/144493300_x.jpeg', 'Plot Number 6, Area 162,Tuyen Lam Lake, 670000, Đà Lạt, Việt Nam', 'Khách sạn', 'binhanvillage.com.vn', 4, '08999999999', '1110010110', '2017-09-29 15:09:07', 0, 1, 0, 0, 0, 0),
+(9, 'Six Senses Ninh Van Bay', 8139500, 'https://imgec.trivago.com/gtximages/partnerimages/11/04/110484146_y@2x.jpeg', 'Ninh Van bay, Ninh Hoa, Khanh Hoa, 650000, Nha Trang, Việt Nam', 'Resort', 'SixSensesNinhVanBay.com', 5, '+109845933920', '1100101110', '2017-09-30 17:19:12', 0, 0, 1, 0, 0, 0),
+(10, 'Lavender Nha Trangy', 577000, 'https://imgec.trivago.com/partnerimages/14/50/145036042_x.jpeg', '98C/4 Tran Phu St. Loc Tho Ward, 62000, Nha Trang, Việt Nam', 'Khách sạn', 'LavenderNhaTrang.com', 5, '+109845933920', '1110101110', '2017-09-30 17:27:23', 0, 1, 0, 0, 0, 0),
+(11, 'Mia Resort Nha Trang', 5377000, 'https://imgec.trivago.com/partnerimages/14/42/144280106_x.jpeg', 'Bai Dong, Cam Hai Dong, 650000, Nha Trang, Việt Nam', 'Resort', 'MiaResortNhaTrang.com', 1, '+109845933920', '1111101110', '2017-09-30 17:27:23', 0, 1, 0, 0, 0, 0),
+(12, 'Riverside', 979000, 'https://imgec.trivago.com/partnerimages/13/87/138768540_x.jpeg', '18-19-20 Ton Duc Thang Street, District 1, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'Riverside.com', 1, '+109845933920', '1100101110', '2017-09-30 17:27:23', 0, 1, 0, 0, 0, 0),
+(13, 'Queen Ann', 740000, 'https://imgec.trivago.com/partnerimages/20/03/200337120_x.jpeg', '86-88 Bui Thi Xuan Street, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 4, '909657567', '1111001110', '2017-10-01 13:38:56', 0, 1, 0, 0, 0, 0),
+(14, 'Grand Saigon', 2387000, 'https://imgec.trivago.com/partnerimages/17/77/177750770_x.jpeg', '8 Dong Khoi Street, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 4, '909657567', '1111001110', '2017-10-01 13:52:35', 0, 1, 0, 0, 0, 0),
+(15, 'Renaissance Riverside', 3222220, 'https://imgec.trivago.com/partnerimages/17/77/177750770_x.jpeg', '8 Dong Khoi Street, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 4, '8679879342', '1111001110', '2017-10-01 13:52:35', 0, 1, 0, 0, 0, 0),
+(16, 'Continental Saigon', 1234570, 'https://imgec.trivago.com/partnerimages/16/16/161675290_x.jpeg', '132-134 Dong Khoi Street, District 1, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 4, '909657567', '1100001110', '2017-10-01 13:52:35', 0, 1, 0, 0, 0, 0),
+(17, 'Green Ruby', 4487000, 'https://imgec.trivago.com/itemimages/38/70/3870610_v1_isq.jpeg', '25/15 CUU LONG ST., WARD 02, TAN BINH DIST., TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 2, '909657567', '1001001110', '2017-10-01 13:52:36', 0, 1, 0, 0, 0, 0),
+(18, 'Alagon', 1387000, 'https://imgec.trivago.com/partnerimages/20/01/200172056_x.jpeg', '289-291 Ly Tu Trong, District 1, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'qu22eenan.com', 4, '909657567', '0011001110', '2017-10-01 13:53:10', 0, 1, 0, 0, 0, 0),
+(19, 'A & Em 8A Thai Van Lung', 987000, 'https://imgec.trivago.com/partnerimages/21/31/213125936_x.jpeg', '8A Thai Van Lung Street, Ben Thanh Ward, District 1, 700000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 4, '909657567', '1111001000', '2017-10-01 13:54:07', 0, 1, 0, 0, 0, 0),
+(20, 'Thien Ha And Apartment', 4387000, 'https://imgec.trivago.com/partnerimages/14/52/145242676_x.jpeg', '516-518 Huynh Tan Phat, 7Th District, 70000, TP. Hồ Chí Minh, Việt Nam', 'Resort', 'queenan.com', 4, '909657567', '1111001110', '2017-10-01 13:54:07', 0, 1, 0, 0, 0, 0),
+(21, 'Tan Son Nhatn', 3184000, 'https://imgec.trivago.com/partnerimages/19/83/198399134_x.jpeg', '198-200 Hoang Van Thu Street, -, TP. Hồ Chí Minh, Việt Nam', 'Resort', 'q651nan.com', 4, '9909657567', '1111111111', '2017-10-01 13:54:07', 0, 1, 0, 0, 0, 0),
+(22, 'Les Hameaux de l Orient', 1587000, 'https://imgec.trivago.com/partnerimages/17/77/177750770_x.jpeg', 'Rang Hamlet, 70000, TP. Hồ Chí Minh, Việt Nam', 'Khách sạn', 'queenan.com', 4, '909657567', '1111001110', '2017-10-01 13:54:51', 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbluser`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `tbluser` (
+CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` text NOT NULL,
+  `email` text NOT NULL,
   `password` text NOT NULL,
   `hoten` text NOT NULL,
-  `diachi` text NOT NULL,
   `quyen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tbluser`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `tbluser` (`id`, `username`, `password`, `hoten`, `diachi`, `quyen`) VALUES
-(1, 'user1', 'user1', 'Trần Văn A', 'Quận 9, TPHCM', 1),
-(4, 'user2', 'user2', 'Nguyễn Trần Thị A', 'Quận Thủ Đức, TPHCM', 0),
-(5, 'user3', 'user3', 'Lương Văn C', 'Quận Bình Thạnh, TPHCM', 0),
-(6, 'user4', 'user4', 'Lương Văn D', 'Quận Bình Thạnh, TPHCM', 0),
-(7, 'user5', 'user5', 'Lương Văn ED', 'Quận Gò Vấp, TPHCM', 0),
-(8, 'user6', 'user6', 'Lương Văn EAZ', 'Quận Bình Tân, TPHCM', 0),
-(9, 'user7', 'user7', 'Lương Bổng', 'Quận Bình Thạnh, TPHCM', 0),
-(10, 'user8', 'user8', 'Thế Chột', 'Quận 1, TPHCM', 0);
+INSERT INTO `user` (`id`, `email`, `password`, `hoten`, `quyen`) VALUES
+(1, 'user1', 'user1', 'Trần Văn A', 1),
+(4, 'user2', 'user2', 'Nguyễn Trần Thị A', 0),
+(5, 'user3', 'user3', 'Lương Văn C', 0),
+(6, 'user4', 'user4', 'Lương Văn D', 0),
+(7, 'user5', 'user5', 'Lương Văn ED', 0),
+(8, 'user6', 'user6', 'Lương Văn EAZ', 0),
+(9, 'user7', 'user7', 'Lương Bổng', 0),
+(10, 'user8', 'user8', 'Thế Chột', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vung`
+--
+
+CREATE TABLE `vung` (
+  `id` int(11) NOT NULL,
+  `tenvung` text NOT NULL,
+  `lat` float NOT NULL,
+  `long` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `yeuthich`
+--
+
+CREATE TABLE `yeuthich` (
+  `iduser` int(11) NOT NULL,
+  `idks` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tblbinhluan`
+-- Indexes for table `binhluan`
 --
-ALTER TABLE `tblbinhluan`
+ALTER TABLE `binhluan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idks` (`idks`),
+  ADD KEY `iduser` (`iduser`);
+
+--
+-- Indexes for table `danhgia`
+--
+ALTER TABLE `danhgia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `iduser` (`iduser`),
+  ADD KEY `idks` (`idks`);
+
+--
+-- Indexes for table `hinhanh`
+--
+ALTER TABLE `hinhanh`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idks` (`idks`);
+
+--
+-- Indexes for table `khachsan`
+--
+ALTER TABLE `khachsan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idvung` (`idvung`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblimage`
+-- Indexes for table `vung`
 --
-ALTER TABLE `tblimage`
+ALTER TABLE `vung`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblkhachsan`
+-- Indexes for table `yeuthich`
 --
-ALTER TABLE `tblkhachsan`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbluser`
---
-ALTER TABLE `tbluser`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `yeuthich`
+  ADD PRIMARY KEY (`iduser`,`idks`),
+  ADD KEY `idks` (`idks`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tblbinhluan`
+-- AUTO_INCREMENT for table `binhluan`
 --
-ALTER TABLE `tblbinhluan`
+ALTER TABLE `binhluan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT for table `tblimage`
+-- AUTO_INCREMENT for table `danhgia`
 --
-ALTER TABLE `tblimage`
+ALTER TABLE `danhgia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `hinhanh`
+--
+ALTER TABLE `hinhanh`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `tblkhachsan`
+-- AUTO_INCREMENT for table `khachsan`
 --
-ALTER TABLE `tblkhachsan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `khachsan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
--- AUTO_INCREMENT for table `tbluser`
+-- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `tbluser`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;COMMIT;
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `vung`
+--
+ALTER TABLE `vung`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `binhluan`
+--
+ALTER TABLE `binhluan`
+  ADD CONSTRAINT `binhluan_ibfk_1` FOREIGN KEY (`idks`) REFERENCES `khachsan` (`id`),
+  ADD CONSTRAINT `binhluan_ibfk_2` FOREIGN KEY (`iduser`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `danhgia`
+--
+ALTER TABLE `danhgia`
+  ADD CONSTRAINT `danhgia_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `danhgia_ibfk_2` FOREIGN KEY (`idks`) REFERENCES `khachsan` (`id`);
+
+--
+-- Constraints for table `hinhanh`
+--
+ALTER TABLE `hinhanh`
+  ADD CONSTRAINT `hinhanh_ibfk_1` FOREIGN KEY (`idks`) REFERENCES `khachsan` (`id`);
+
+--
+-- Constraints for table `khachsan`
+--
+ALTER TABLE `khachsan`
+  ADD CONSTRAINT `khachsan_ibfk_1` FOREIGN KEY (`idvung`) REFERENCES `vung` (`id`);
+
+--
+-- Constraints for table `yeuthich`
+--
+ALTER TABLE `yeuthich`
+  ADD CONSTRAINT `yeuthich_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `yeuthich_ibfk_2` FOREIGN KEY (`idks`) REFERENCES `khachsan` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
