@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import {
     View, Text, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, FlatList, Dimensions,
-    Image, ScrollView, TextInput
+    Image, ScrollView, TextInput, ToastAndroid
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 
@@ -22,7 +22,8 @@ export default class DuyetKhachSan extends Component {
             swipeToClose: true,
             sliderValue: 0.3,
             page: 1,
-            refresh: false
+            refresh: false,
+            index: 0
         }
     }
    
@@ -33,9 +34,42 @@ export default class DuyetKhachSan extends Component {
         alert('Xác nhận thành công ..1')
     }
     huy() {
-        this.refs.modal3.close();
-        alert(this.state.value);
-        this.setState({value: ''})
+        // this.refs.modal3.close();
+        // alert(this.state.value);
+        // this.setState({value: ''})
+       // huyDuyet()
+       //alert(this.state.mang[this.state.index].key);
+       fetch(global.server.concat('huyDuyetKhachSan.php'),
+       {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json',
+               Accept: 'application/json'
+           },
+           body: JSON.stringify({ id: this.state.mang[this.state.index].key, noidung: this.state.value })
+       })
+       .then(res => res.text())
+       .then(res => {
+            this.refs.modal3.close();
+            if (res === '1') {
+                //this.refs.modal3.close();
+                //alert(this.state.value);
+    
+                let { mang } = this.state;
+                //var maxId = Math.max.apply(null, mang.map(item => item.id)) + 1;
+                mang.splice(this.state.index, 1);
+    
+                this.setState({
+                    mang,
+                    value: ''
+                })
+                ToastAndroid.show('Thành công', ToastAndroid.SHORT);
+            }
+            else {
+                alert('Lỗi !!')
+            }
+       })
+       .catch((e)=>{console.log(e)});
     }
 
     refresh() {
@@ -47,7 +81,7 @@ export default class DuyetKhachSan extends Component {
         this.setState({
             refresh: true
         })
-        fetch(global.server.concat('getDanhSachChoDuyet.php?trang=1'))
+        fetch(global.server.concat('getDanhSachChoDuyet.php?trang=' + this.state.page))
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -95,12 +129,12 @@ export default class DuyetKhachSan extends Component {
                     refreshing={this.state.refresh}
                     onRefresh={() => { this.refresh() }}
                     data={this.state.mang}
-                    renderItem={({ item }) =>
+                    renderItem={({ item, index }) =>
                         <View style={styles.rowFlatlist}>
                             <TouchableWithoutFeedback
                                 onPress={() => { 
-                                    global.idKS = item.key;
-                                    navigate('ChiTiet', { name: item.ten, id: item.key })
+                                        {/* global.idKS = item.key;
+                                        navigate('ChiTiet', { name: item.ten, id: item.key }) */}
                                     }}
                             >
                              <View style={{ height: width / 3, flexDirection: 'row', backgroundColor: 'white', borderRadius: 5 }}>
@@ -132,7 +166,10 @@ export default class DuyetKhachSan extends Component {
                                                         <View style={{ flex: 1, borderTopWidth: 1, borderTopColor: '#e9ebee', paddingHorizontal: 2, paddingVertical: 2}}>
                                                         <TouchableOpacity
                                                                 style={{flexDirection: 'row', flex: 1 }}
-                                                                onPress={() => this.refs.modal3.open()}
+                                                                onPress={() => {
+                                                                                this.refs.modal3.open();
+                                                                                this.setState({ index })
+                                                                                }}
                                                         >
                                                                 <View style={{ flex: 2, paddingVertical: 2 }}>
                                                                     <Image resizeMode={'contain'} source={imghuy} style={{ flex: 1 }} />
@@ -155,9 +192,11 @@ export default class DuyetKhachSan extends Component {
 
                                                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                                             <TouchableOpacity
-                                                                
+                                                                onPress={()=>{ global.idKS = item.key;
+                                                                              navigate('ChiTiet', { name: item.ten, id: item.key })
+                                                                       }}
                                                             >
-                                                                <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>View Details</Text>
+                                                                <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>Chi tiết</Text>
                                                             </TouchableOpacity>
                                                         </View>
 

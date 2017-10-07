@@ -45,7 +45,7 @@ export default class Main extends Component {
         global.locDL = false;
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
-        global.server = 'http://192.168.1.63:8080/Demo/';
+        global.server = 'http://192.168.1.88:8080/Demo/';
         //global.server = 'https://webservicestrivago.000webhostapp.com/';
     }
 
@@ -138,18 +138,19 @@ export default class Main extends Component {
             }
         }
         else {
-            if(global.locsao == ''){
-                global.locsao = 12345
-            }
-           if(this.state.refresh === false) {
+           
+            // Chỉ lọc theo số sao
+            if(global.loctiennghi === '0000000000') {
                 this.setState({
                     refresh: true,
                 })
-                fetch(global.server + 'getListKhachSanLoc.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao)
-                .then((response) =>  response.json() )
+                fetch(global.server + 'getDanhSachKhachSanLocSao.php?trang=' + global.trangloc + '&sosao=' + global.locsao)
+                .then((response) => response.json())
                 .then((responseJson) => {
                     if (responseJson.length > 0) {
                         if ( global.trangloc === 1 ) {
+                           // let mang = responseJson;
+
                             this.setState({
                                     mang: responseJson,
                                     refresh: false,
@@ -177,6 +178,52 @@ export default class Main extends Component {
                 .catch((e) => { 
                     alert(e) 
                 });
+            }
+            // lọc theo các tiện nghi
+            else {
+                if (global.locsao == ''){
+                    global.locsao = 12345 // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
+                }
+                
+            if(this.state.refresh === false) {
+                    this.setState({
+                        refresh: true,
+                    })
+                    fetch(global.server + 'getListKhachSanLoc.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao)
+                    .then((response) =>  response.json() )
+                    .then((responseJson) => {
+                        if (responseJson.length > 0) {
+                            if ( global.trangloc === 1 ) {
+                               // let mang = responseJson;
+
+                                this.setState({
+                                        mang: responseJson,
+                                        refresh: false,
+                                        //page: this.state.page + 1
+                                    });
+                            }
+                            else{
+                                this.setState({
+                                    mang: this.state.mang.concat(responseJson),
+                                    refresh: false,
+                                    //page: this.state.page + 1
+                                });
+                            }
+                            global.trangloc = global.trangloc + 1;
+                        }
+                        else{
+                            if(global.trangloc === 1){
+                                this.setState({mang:[]})
+                            }
+                                this.setState({ 
+                                    refresh: false,
+                                });
+                        }
+                    }) 
+                    .catch((e) => { 
+                        alert(e) 
+                    });
+                }
             }
         }
         
@@ -236,18 +283,18 @@ export default class Main extends Component {
                     <Text>Up</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={() => { this.testt() }}
                 >
                     <Text>Load Page 3</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <View style={{height: this.state.maxheight }}>
                 <FlatList
                     onEndReachedThreshold={0.2}
                     onEndReached={() => { this.loadMore() }}
                     ref="ds"
-                    ListHeaderComponent={(<HeaderFlatList />)}
+                    //ListHeaderComponent={(<HeaderFlatList />)}
                     refreshing={this.state.refresh}
                     onRefresh={() => { this.refresh() }}
                     data={this.state.mang}
@@ -310,7 +357,7 @@ export default class Main extends Component {
                     }
                 />
                 
-                    <View style={{ backgroundColor: 'white', height: this.state.heightbottom }}>
+                    {/* <View style={{ backgroundColor: 'white', height: this.state.heightbottom }}>
                         <TouchableOpacity
                             onPress={() => { this.popupDialog.show() }}
                         >
@@ -351,7 +398,8 @@ export default class Main extends Component {
                             </RadioButton>                      
                         </RadioGroup>                 
                     </View>
-                </PopupDialog>
+                </PopupDialog> */}
+            </View>
             </View>
         )
     }

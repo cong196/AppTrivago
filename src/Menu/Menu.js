@@ -8,8 +8,9 @@ export default class Menu extends Component {
 
     loadDL() {
         global.locDL = true;
-        global.loadDuLieuLoc();
         global.trangloc = 1;
+        global.loadDuLieuLoc();
+        
     }
     render() {
         return (

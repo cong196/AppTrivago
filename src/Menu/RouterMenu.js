@@ -11,15 +11,16 @@ export const TabFilters = TabNavigator(
         TabTopFilter: {
             screen: TopFilters,
             navigationOptions: {
-                tabBarLabel: 'Top Filters'
-            }
-        },
-        TabExtraFilter: {
-            screen: ExtraFilters,
-            navigationOptions: {
-                tabBarLabel: 'Extra Filters'
+                tabBarLabel: 'Lọc dữ liệu'
             }
         }
+        // ,
+        // TabExtraFilter: {
+        //     screen: ExtraFilters,
+        //     navigationOptions: {
+        //         tabBarLabel: 'Extra Filters'
+        //     }
+        // }
     },
     {
         tabBarPosition: 'top',

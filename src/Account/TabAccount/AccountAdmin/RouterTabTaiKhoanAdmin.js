@@ -19,13 +19,13 @@ export const TbAccountAdmin = TabNavigator(
         TabKhachSan: {
             screen: QuanLyKhachSan,
             navigationOptions: {
-                tabBarLabel: 'Quản lý khách sạn'
+                tabBarLabel: 'Khách sạn'
             }
         },
         TabTaiKhoan: {
             screen: QuanLyTaiKhoan,
             navigationOptions: {
-                tabBarLabel: 'Quản lý tài khoản'
+                tabBarLabel: 'Cá Nhân'
             }
         }
     },
