@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import {
     View, Text, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, FlatList, Dimensions,
-    Image, ScrollView, TextInput
+    Image, ScrollView, TextInput, ToastAndroid, ActivityIndicator
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 
@@ -27,14 +27,66 @@ export default class QuanLyKhachSan extends Component {
             sliderValue: 0.3,
             page: 1,
             refresh: false,
-            index : -1
+            index: -1,
+            loading: false
         }
     }
     setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+        this.setState({ modalVisible: visible });
     }
     xacnhan() {
-        alert('Xác nhận thành công ..1')
+        if(this.state.mang[this.state.index].tinhtrang === '1') {
+            fetch(global.server.concat('khoaKhachSan.php'),
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({ id: this.state.mang[this.state.index].key })
+            })
+            .then(res => res.text())
+            .then(res => {
+                this.refs.modal3.close();
+                if (res === '1') {
+                    ToastAndroid.show('Thành công', ToastAndroid.SHORT);
+                    // this.state.mang[this.state.index].tinhtrang = '0';
+                    let mang = this.state.mang;
+                    mang[this.state.index].tinhtrang = '0';
+                    this.setState({ mang })
+                }
+                else {
+                    alert('Lỗi !!')
+                }
+            })
+            .catch((e)=>{console.log(e)});
+        } else {
+            fetch(global.server.concat('moKhoaKhachSan.php'),
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({ id: this.state.mang[this.state.index].key })
+            })
+            .then(res => res.text())
+            .then(res => {
+                 this.refs.modal3.close();
+                 if (res === '1') {
+                     ToastAndroid.show('Thành công', ToastAndroid.SHORT);
+                    // this.state.mang[this.state.index].tinhtrang = '0';
+                     let mang = this.state.mang;
+                     mang[this.state.index].tinhtrang = '1';
+                     this.setState({ mang })
+                 }
+                 else {
+                     alert('Lỗi !!')
+                 }
+            })
+            .catch((e)=>{console.log(e)});
+        }
+
     }
     xoa() {
         this.refs.modal3.close();
@@ -52,9 +104,17 @@ export default class QuanLyKhachSan extends Component {
        // alert(this.state.index)
     }
 
+    loadThem() {
+        this.setState({ loading: true }, function () {
+            this.loadKhachSanDuyet();
+        });
+    }
+
     refresh() {
-        this.setState({ page: 1, mang: []});
-        this.loadDataRefresh();
+        this.setState({ page: 1, mang: []}, function() {
+            this.loadDataRefresh();
+        });
+        
     }
 
     loadDataRefresh(){
@@ -67,7 +127,8 @@ export default class QuanLyKhachSan extends Component {
             this.setState({
                 mang: responseJson,
                 refresh: false,
-                page: 1
+                page: 1,
+                loading: false
             });
         })
         .catch((e)=>{console.log(e)});
@@ -75,7 +136,7 @@ export default class QuanLyKhachSan extends Component {
 
     loadKhachSanDuyet() {
         if (this.state.refresh === false) {
-            global.trangloc = 1;
+           // global.trangloc = 1;
             this.setState({
                 refresh: true
             })
@@ -83,10 +144,12 @@ export default class QuanLyKhachSan extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if(responseJson.length > 0)
+                    
                     this.setState({
                         mang: this.state.mang.concat(responseJson),
                         refresh: false,
-                        page: this.state.page + 1
+                        page: this.state.page + 1,
+                        loading: false
                     });
                 else{
                     this.setState({ 
@@ -105,6 +168,26 @@ export default class QuanLyKhachSan extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                ListFooterComponent={(
+                        <View style= {{ padding: 10 }}>
+                            {
+                                !this.state.loading ?
+                                    (
+                                        <TouchableOpacity
+                                            onPress={() => { this.loadThem() }}
+                                        >
+                                            <Text style={{ color: '#4267b2' }}>Load thêm danh sách ...</Text>
+                                        </TouchableOpacity>) :
+                                    (
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                            <ActivityIndicator size={24} />
+                                            <Text>   Loading ...</Text>
+                                        </View>
+                                    )
+                            }
+
+                        </View>
+                    )}
                     refreshing={this.state.refresh}
                     onRefresh={() => { this.refresh() }}
                     data={this.state.mang}
@@ -130,7 +213,12 @@ export default class QuanLyKhachSan extends Component {
                                                         <View style={{ flex: 1, paddingHorizontal: 2, paddingVertical: 2 }}>
                                                             <TouchableOpacity
                                                                 style={{flexDirection: 'row', flex: 1 }}
-                                                                onPress = {()=>{ this.xacnhan() }}
+                                                                onPress={() => { 
+                                                                                this.setState({ index }, function () {
+                                                                                                            this.xacnhan();
+                                                                                                        })
+                                                                                //this.xacnhan();
+                                                                            }}
                                                             >
                                                                 <View style={{ flex: 2, paddingVertical: 2 }}>
                                                                     <Image resizeMode={'contain'} source={item.tinhtrang === '1' ? imglock : imgunlock } style={{ flex: 1 }} />

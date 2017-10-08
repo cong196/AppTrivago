@@ -7,10 +7,14 @@ import global from '../global';
 export default class Menu extends Component {
 
     loadDL() {
-        global.locDL = true;
-        global.trangloc = 1;
-        global.loadDuLieuLoc();
-        
+        if(global.locgiamax < global.locgiamin) {
+            alert('Chọn lại giá');
+        }
+        else {
+            global.locDL = true;
+            global.trangloc = 1;
+            global.loadDuLieuLoc();
+        }
     }
     render() {
         return (
