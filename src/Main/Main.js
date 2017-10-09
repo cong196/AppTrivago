@@ -41,11 +41,12 @@ export default class Main extends Component {
         global.locgiamin = 0;
         global.isdangnhap = true;
         global.quyen = 1;
+        global.userdangnhap = 1;
         global.locsao = '';
         global.locDL = false;
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
-        global.server = 'http://192.168.1.88:8080/Demo/';
+        global.server = 'http://192.168.1.89:8080/Demo/';
         //global.server = 'https://webservicestrivago.000webhostapp.com/';
     }
 

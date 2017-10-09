@@ -7,8 +7,9 @@ module.export = {
     locsao: 0,
     isdangnhap: null,
     quyen: null,
-    locDL : false,
+    locDL: false,
     trangloc: 1,
     loadDuLieuLoc: null,
-    server: null
+    server: null,
+    userdangnhap: null
 }

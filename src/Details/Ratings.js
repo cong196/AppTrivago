@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     View, FlatList, Text, Image, TextInput, StyleSheet, TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator, ToastAndroid
 } from 'react-native';
 import global from '../global';
 import iconaccount from '../img/iconaccount.png';
@@ -26,17 +26,46 @@ export default class Ratings extends Component {
     
     post() {
         if(this.state.value != '') {
-            if(!this.state.dangnhap)
+            if(global.isdangnhap)
             {
                 
-                const { mang } = this.state;
-                var maxId = Math.max.apply(null, mang.map(item => item.id)) + 1;
-                mang.unshift({ id: maxId, ten: 'ABC', binhluan: this.state.value, sodanhgia: 4 });
+                // const { mang } = this.state;
+                // var maxId = Math.max.apply(null, mang.map(item => item.id)) + 1;
+                // mang.unshift({ id: maxId, ten: 'ABC', binhluan: this.state.value, sodanhgia: 4 });
                 
-                this.setState({
-                    mang,
-                    value: '',
-                });
+                // this.setState({
+                //     mang,
+                //     value: '',
+                // });
+               
+                fetch(global.server.concat('themBinhLuan.php'),
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json'
+                    },
+                    body: JSON.stringify({ iduser: global.userdangnhap, idks: global.idKS, nd: this.state.value })
+                })
+                .then(res => res.text())
+                .then(res => {
+                    if (res === '1') {
+                        ToastAndroid.show('Thành công', ToastAndroid.SHORT);
+                        const { mang } = this.state;
+                        let maxId = Math.max.apply(null, mang.map(item => item.id)) + 1;
+                        mang.unshift({ id: maxId, ten: 'Trần Văn A', binhluan: this.state.value });
+                        
+                        this.setState({
+                            mang,
+                            value: '',
+                        });
+                    }
+                    else {
+                        alert(this.state.value);
+                    }
+                    //alert(res);
+                })
+                .catch((e)=>{console.log(e)});
                 
             }
             else{
@@ -49,19 +78,30 @@ export default class Ratings extends Component {
     }
 
     loadData() {
-        fetch( global.server.concat('getBinhLuan.php?id=' + global.idKS + "&trang=" + this.state.page))
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                mang: responseJson
-            });
-        })
-        .catch((e) => { console.log(e) });
-       
+        
+        this.setState({ loading: true }, function (){
+            fetch( global.server.concat('getBinhLuan.php?id=' + global.idKS + "&trang=" + this.state.page))
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if(responseJson.length > 0){
+                    this.setState({
+                        mang: this.state.mang.concat(responseJson),
+                        page: this.state.page + 1,
+                        loading: false
+                    });
+                }
+                else{
+                    this.setState({
+                        loading: false
+                    });
+                }
+            })
+            .catch((e) => { console.log(e) });
+        });
+        
     }
-
     loadThemBinhLuan() {
-        this.setState({ loading: true });
+        this.loadData();
     }
     onStarRatingPress(rating) {
         this.setState({
@@ -94,7 +134,7 @@ export default class Ratings extends Component {
                                 <Text style={{ fontSize: 20 }}>{ this.state.diemso + '/100'}</Text>
                             </ProgressCircle>
                             <View style={{ flex: 2, paddingLeft: 10 }}>
-                                <Text>Chỉ số dựa trên {this.state.mang.length > 0 ? this.state.mang[0].sodanhgia : 0} đánh giá của người dùng</Text>
+                                <Text>Chỉ số dựa trên {this.state.mang.length > 0 ? this.state.mang.length : 0} đánh giá của người dùng</Text>
                                 <View style={{ paddingHorizontal: 30, paddingVertical: 10 }}>
                                     <StarRating
                                         starSize={25}
