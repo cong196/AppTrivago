@@ -11,10 +11,20 @@ export default class Account extends Component {
     goBack() {
         this.props.navigation.goBack();
     }
+    goDuyetKhachSan(){
+        this.props.navigation.navigate('DuyetKhachSan');
+    }
+    goQuanLyKhachSan(){
+        this.props.navigation.navigate('QuanLyKhachSan');
+    }
     render() {
         return (
             
-            global.isdangnhap ? <TabAccount goBack={this.goBack.bind(this)} /> : <DnDx goBack={this.goBack.bind(this)} />
+            global.isdangnhap ? <TabAccount 
+                                    goBack={this.goBack.bind(this)}
+                                    goDuyetKS={this.goDuyetKhachSan.bind(this)} 
+                                    goQLKS={this.goQuanLyKhachSan.bind(this)}
+                                    /> : <DnDx goBack={this.goBack.bind(this)} />
            
         )
     }

@@ -7,7 +7,7 @@ import Modal from 'react-native-modalbox';
 
 import global from '../../../global';
 import imghuy from './huy.png';
-
+import icback from '../../../img/icback.png';
 import imglock from './iconlock.png';
 import imgunlock from './iconunlock.png';
 
@@ -164,9 +164,17 @@ export default class QuanLyKhachSan extends Component {
         this.loadKhachSanDuyet();
     }
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableOpacity
+                        onPress={() => { this.props.navigation.goBack() }}
+                    >
+                        <Image style={{ width: 25, height: 25 }} source={icback} />
+                    </TouchableOpacity>
+                    <Text numberOfLines={1} style={{ fontWeight: 'bold', paddingLeft: 10 }}>Quản lý khách sạn</Text>
+                    
+                </View>
                 <FlatList
                 ListFooterComponent={(
                         <View style= {{ padding: 10 }}>
@@ -261,7 +269,7 @@ export default class QuanLyKhachSan extends Component {
                                                             <TouchableOpacity
                                                                 onPress = {()=>{
                                                                     global.idKS = item.key;
-                                                                    navigate('ChiTiet', { name: item.ten, id: item.key })
+                                                                    this.props.navigation.navigate('DetailScreen', { name: item.ten, id: item.key })
                                                                 }}
                                                             >
                                                                 <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>Chi tiết</Text>
@@ -347,4 +355,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    header: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        height: 40,
+        padding: 4,
+        alignItems: 'center',
+        
+        borderBottomWidth: 1,
+        paddingHorizontal: 5
+    }
 })

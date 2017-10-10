@@ -10,6 +10,12 @@ import Account from './Account/Account';
 import Search from './Search/Search';
 import Details from './Details/Details';
 
+
+
+import TrangQuanLyAdmin from './Account/TabAccount/AccountAdmin/TrangQuanLyAdmin';
+import DuyetKhachSan from './Account/TabAccount/AccountAdmin/DuyetKhachSan';
+import QuanLyKhachSan from './Account/TabAccount/AccountAdmin/QuanLyKhachSan';
+
 var { height, width } = Dimensions.get('window');
 
 export const MainStack = StackNavigator({
@@ -21,8 +27,11 @@ export const MainStack = StackNavigator({
     },
     AccountScreen: {
         screen: Account,
+        // navigationOptions: {
+        //     headerTitle: 'Tài khoản'
+        // }
         navigationOptions: {
-            headerTitle: 'Tài khoản'
+            header: null
         }
     },
     SearchScreen: {
@@ -30,6 +39,26 @@ export const MainStack = StackNavigator({
     },
     DetailScreen: {
         screen: Details,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+    TrangQuanLyAdmin: {
+        screen: TrangQuanLyAdmin,
+        navigationOptions: {
+            header: null
+        }
+    },
+    DuyetKhachSan: {
+        screen: DuyetKhachSan,
+        navigationOptions: {
+            header: null
+        }
+    },
+    QuanLyKhachSan: {
+        screen: QuanLyKhachSan,
         navigationOptions: {
             header: null
         }
