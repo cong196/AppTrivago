@@ -1,7 +1,7 @@
 module.export = {
     searchData: null,
     idKS: null,
-    loctiennghi: null,
+    loctiennghi: '0000000000',
     locgiamax: 0,
     locgiamin: 0,
     locsao: 0,

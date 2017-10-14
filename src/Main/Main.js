@@ -1,4 +1,4 @@
-import React,{ Component } from 'react';
+﻿import React,{ Component } from 'react';
 import {
     View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, TouchableWithoutFeedback,
     TextInput, FlatList
@@ -46,7 +46,7 @@ export default class Main extends Component {
         global.locDL = false;
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
-        global.server = 'http://192.168.1.89:8080/Demo/';
+        global.server = 'http://192.168.1.88:8080/Demo/';
         //global.server = 'https://webservicestrivago.000webhostapp.com/';
     }
 
@@ -90,7 +90,7 @@ export default class Main extends Component {
         this.setState({
             refresh: true,
         })
-        fetch("http://192.168.1.173:8080/Flatlist/demo3.php?trang="+page)
+        fetch("http://192.168.1.173:8080/Flatlist/demo3.php?trang=" + page)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -102,7 +102,6 @@ export default class Main extends Component {
         .catch((e)=>{console.log(e)});
     }
     loadMore() {
-        //alert('load thêm');
         this.loadData(this.state.page);
     }
     onSelect(index) {
@@ -114,6 +113,7 @@ export default class Main extends Component {
     }
     showModal = () => this.setState({ isModalVisible: true });
     loadData(page) {
+        
         if (global.locDL === false) {
             if (this.state.refresh === false) {
                 global.trangloc = 1;
@@ -142,10 +142,8 @@ export default class Main extends Component {
             if (global.locgiamax === 0 && global.locgiamin === 0 &&
                 global.loctiennghi === '0000000000' && global.locsao === '')
                 return;
-            else{
-                if(global.locgiamax === 0 && global.locgiamin === 0) {
-
-                    // Chỉ lọc theo số sao
+            else {
+                if (global.locgiamax === 0 && global.locgiamin === 0) {
                     if (global.loctiennghi === '0000000000' && global.locsao !== '') {
                         this.setState({
                             refresh: true,
@@ -154,7 +152,7 @@ export default class Main extends Component {
                         .then((response) => response.json())
                         .then((responseJson) => {
                             if (responseJson.length > 0) {
-                                if ( global.trangloc === 1 ) {
+                                if (global.trangloc === 1) {
                                 // let mang = responseJson;
 
                                     this.setState({
@@ -163,18 +161,17 @@ export default class Main extends Component {
                                             //page: this.state.page + 1
                                         });
                                 }
-                                else{
+                                else {
                                     this.setState({
                                         mang: this.state.mang.concat(responseJson),
-                                        refresh: false,
-                                        //page: this.state.page + 1
+                                        refresh: false
                                     });
                                 }
                                 global.trangloc = global.trangloc + 1;
                             }
-                            else{
-                                if(global.trangloc === 1){
-                                    this.setState({mang:[]})
+                            else {
+                                if (global.trangloc === 1) {
+                                    this.setState({ mang: [] });
                                 }
                                     this.setState({ 
                                         refresh: false,
@@ -190,7 +187,7 @@ export default class Main extends Component {
                     // lọc theo các tiện nghi
                     else {
                         if (global.locsao === ''){
-                            global.locsao = 12345 // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
+                            global.locsao = '12345'; // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
                         }
                         
                     if(this.state.refresh === false) {
@@ -219,9 +216,9 @@ export default class Main extends Component {
                                     }
                                     global.trangloc = global.trangloc + 1;
                                 }
-                                else{
-                                    if(global.trangloc === 1){
-                                        this.setState({mang:[]})
+                                else {
+                                    if (global.trangloc === 1) {
+                                        this.setState({ mang: [] });
                                     }
                                         this.setState({ 
                                             refresh: false,
@@ -229,18 +226,23 @@ export default class Main extends Component {
                                 }
                             }) 
                             .catch((e) => { 
-                                alert(e) 
+                                alert(e); 
                             });
                         }
                     }
                 }
                 else {
-                    
                     // Chỉ lọc theo số sao
-                    if (global.loctiennghi === '0000000000' && global.locsao !== '') {
+                    if (global.loctiennghi === '0000000000') {
                         this.setState({
                             refresh: true,
                         })
+                        if (global.locsao === '') {
+                            global.locsao = '12345'; // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
+                        }
+
+                        //alert('Vào');
+
                         fetch(global.server + 'locKhachSan_Gia_Sao.php?trang=' + global.trangloc + '&sosao=' + global.locsao + '&giamin=' + global.locgiamin + '&giamax=' + global.locgiamax)
                         .then((response) => response.json())
                         .then((responseJson) => {
@@ -280,51 +282,49 @@ export default class Main extends Component {
 
                     // lọc theo các tiện nghi kèm sao
                     else {
-                        if (global.locsao === ''){
-                            global.locsao = 12345 // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
+                        if (global.locsao === '') {
+
+                            global.locsao = '12345'; // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
                         }
-                    
-                    if(this.state.refresh === false) {
-                        
-                            this.setState({
-                                refresh: true,
-                            })
-                            fetch(global.server.concat('locKhachSan_Gia_Sao_TienNghi.php?trang='+global.trangloc+'&tiennghi='+global.loctiennghi+'&sosao='+global.locsao+'&giamax='+global.locgiamax+'&giamin='+global.locgiamin))
-                            .then((response) => response.json())
-                            .then((responseJson) => {
-                                //alert(responseJson.length);
-                                if (responseJson.length > 0) {
-                                    if ( global.trangloc === 1) {
-                                    // let mang = responseJson;
-                                        this.setState({
-                                                mang: responseJson,
-                                                refresh: false,
-                                                //page: this.state.page + 1
+                        if (this.state.refresh === false) {
+                            
+                                this.setState({
+                                    refresh: true,
+                                })
+                                //alert(global.server.concat('locKhachSan_Gia_Sao_TienNghi.php?trang='+global.trangloc+'&tiennghi='+global.loctiennghi+'&sosao='+global.locsao+'&giamax='+global.locgiamax+'&giamin='+global.locgiamin));
+                                fetch(global.server.concat('locKhachSan_Gia_Sao_TienNghi.php?trang='+global.trangloc+'&tiennghi='+global.loctiennghi+'&sosao='+global.locsao+'&giamax='+global.locgiamax+'&giamin='+global.locgiamin))
+                                .then((response) => response.json())
+                                .then((responseJson) => {
+                                    if (responseJson.length > 0) {
+                                        if ( global.trangloc === 1) {
+                                        // let mang = responseJson;
+                                            this.setState({
+                                                    mang: responseJson,
+                                                    refresh: false,
+                                                });
+                                        }
+                                        else{
+                                            this.setState({
+                                                mang: this.state.mang.concat(responseJson),
+                                                refresh: false
                                             });
+                                        }
+                                        global.trangloc = global.trangloc + 1;
                                     }
                                     else{
-                                        this.setState({
-                                            mang: this.state.mang.concat(responseJson),
-                                            refresh: false,
-                                            //page: this.state.page + 1
-                                        });
+                                        if(global.trangloc === 1) {
+                                            this.setState({ mang: [] })
+                                        }
+                                            this.setState({ 
+                                                refresh: false,
+                                            });
                                     }
-                                    global.trangloc = global.trangloc + 1;
-                                }
-                                else{
-                                    if(global.trangloc === 1) {
-                                        this.setState({ mang: [] })
-                                    }
-                                        this.setState({ 
-                                            refresh: false,
-                                        });
-                                }
-                            }) 
-                            .catch((e) => { 
-                                alert(e) 
-                            });
+                                }) 
+                                .catch((e) => { 
+                                    alert(e) 
+                                });
+                            }
                         }
-                    }
                 }
             }
         }

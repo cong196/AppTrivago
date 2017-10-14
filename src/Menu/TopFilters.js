@@ -151,7 +151,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ wifi2: !this.state.wifi2 }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.wifi2)
                                 temp[1] = '1';
                             else
@@ -169,7 +169,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ beboi: !this.state.beboi }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.beboi)
                                 temp[2] = '1';
                             else
@@ -187,7 +187,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ spa: !this.state.spa }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.spa)
                                 temp[3] = '1';
                             else
@@ -206,7 +206,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ doxe: !this.state.doxe }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.doxe)
                                 temp[4] = '1';
                             else
@@ -226,7 +226,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ vatnuoi: !this.state.vatnuoi }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.vatnuoi)
                                 temp[5] = '1';
                             else
@@ -244,7 +244,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ dieuhoa: !this.state.dieuhoa });
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.dieuhoa)
                                 temp[6] = '1';
                             else
@@ -262,7 +262,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ nhahang: !this.state.nhahang }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.nhahang)
                                 temp[7] = '1';
                             else
@@ -280,7 +280,7 @@ export default class TopFilters extends Component {
                     <TouchableOpacity style={{ flex: 1 }}
                         onPress={() => { 
                             this.setState({ bar: !this.state.bar }) 
-                            var temp = global.loctiennghi.split('');
+                            let temp = global.loctiennghi.split('');
                             if(!this.state.bar)
                                 temp[8] = '1';
                             else

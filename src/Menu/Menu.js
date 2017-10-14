@@ -18,8 +18,8 @@ export default class Menu extends Component {
     }
     render() {
         return (
-            <View style = { styles.container }>
-                <View style = {styles.tab }>
+            <View style={styles.container}>
+                <View style={styles.tab}>
                     <TabFilters />
                 </View>
                 <TouchableOpacity 
