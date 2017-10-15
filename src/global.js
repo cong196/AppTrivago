@@ -11,5 +11,8 @@ module.export = {
     trangloc: 1,
     loadDuLieuLoc: null,
     server: 'http://192.168.1.88:8080/Demo/',
-    userdangnhap: null
+    userdangnhap: null,
+    latsearch: 10.1686747,
+    longsearch: 106.6992098,
+    bankinhsearch: 70
 }

@@ -12,9 +12,9 @@ export default class Search extends Component {
             mang: []
         }
     }
-    search(page) {
+    search() {
+        global.searchData();
         this.goBack1();
-        global.searchData(3);
         
     }
     goBack1() {
@@ -22,7 +22,7 @@ export default class Search extends Component {
     }
     loadData() {
         //alert("load "+this.state.value)
-        fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+this.state.value+'&types=geocode&language=vn&key=AIzaSyC9hXBNhK5zuePc2RftV09n3Ao9IPE2tRA')
+        fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + this.state.value + '&types=geocode&language=vn&key=AIzaSyC9hXBNhK5zuePc2RftV09n3Ao9IPE2tRA')
         .then((response) => response.json())
         .then((responseJson) => {
             // this.setState({
@@ -46,7 +46,9 @@ export default class Search extends Component {
         fetch('https://maps.googleapis.com/maps/api/place/details/json?placeid=' + id + '&key=AIzaSyC9hXBNhK5zuePc2RftV09n3Ao9IPE2tRA')
         .then((response) => response.json())
         .then((responseJson) => {
-            
+            global.latsearch = responseJson.result.geometry.location.lat;
+            global.longsearch = responseJson.result.geometry.location.lng;
+            this.search();
             // this.setState({mang: []})
             // for (let i = 0 ; i<responseJson.predictions.length; i++)
             // {  
@@ -55,7 +57,7 @@ export default class Search extends Component {
             //         mang: this.state.mang.concat({description: responseJson.predictions[i].description, id:responseJson.predictions[i].place_id})
             //     })
             // }
-            alert(responseJson.result.geometry.location.lat + ' ----- ' + responseJson.result.geometry.location.lng);
+            //alert(responseJson.result.geometry.location.lat + ' ----- ' + responseJson.result.geometry.location.lng);
         })
         .catch((e)=>{console.log(e)});
     }

@@ -16,9 +16,10 @@ import imgex from '../img/imgexam.png';
 import s1 from '../img/sad.png';
 import s2 from '../img/s2.png';
 import s3 from '../img/s3.png';
+
 const { height, width } = Dimensions.get('window');
-const height1 = height/13;
-const height2 = height/12;
+const height1 = height / 13;
+const height2 = height / 12;
 
 export default class Main extends Component {
     constructor(props) {
@@ -47,6 +48,9 @@ export default class Main extends Component {
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
         global.server = 'http://192.168.1.88:8080/Demo/';
+        global.latsearch = 10.1686747;
+        global.longsearch = 106.6992098;
+        global.bankinhsearch = 70;
         //global.server = 'https://webservicestrivago.000webhostapp.com/';
     }
 
@@ -60,47 +64,91 @@ export default class Main extends Component {
         this.loadDataRefresh();
     }
 
-    loadDataRefresh(){
+    loadDataRefresh() {
+
+        // this.setState({
+        //     refresh: true,
+        //     page: 1
+        // }, function() {
+        //     this.loadData(this.sta)
+        // })
         this.setState({
             refresh: true
-        })
-        fetch(global.server.concat('getListKhachSan.php?trang=1'))
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                mang: responseJson,
-                refresh: false,
-                page: 1,
-                load1: true
-            });
-        })
-        .catch((e)=>{console.log(e)});
-    }
-    clickMap(){
-        this.setState({
-            map : !this.state.map
         });
-        if(this.state.map){
-            this.setState({maxheight: 0,heightbottom:0,heigthmapview:height-height1-height2});
-        }
-        else
-            this.setState({maxheight: height-height1-height2,heightbottom: height1,heigthmapview: 0})
-    }
-    loadDataFromSearch(page){
-        this.setState({
-            refresh: true,
-        })
-        fetch("http://192.168.1.173:8080/Flatlist/demo3.php?trang=" + page)
+        fetch(global.server.concat('getListKhachSan.php?trang=1') + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
                 mang: responseJson,
                 refresh: false,
-                page: 3,
+                page: 1
             });
         })
-        .catch((e)=>{console.log(e)});
+        .catch((e) => { console.log(e); });
     }
+    clickMap() {
+        this.setState({
+            map: !this.state.map
+        });
+        if (this.state.map) {
+            this.setState({ maxheight: 0, heightbottom: 0, heigthmapview: height - height1 - height2 });
+        } else {
+            this.setState({ maxheight: height - height1 - height2, heightbottom: height1, heigthmapview: 0 });
+        }
+    }
+    loadDataFromSearch() {
+        // this.setState({
+        //     refresh: true,
+        // })
+        // fetch("http://192.168.1.173:8080/Flatlist/demo3.php?trang=" + page)
+        // .then((response) => response.json())
+        // .then((responseJson) => {
+        //     this.setState({
+        //         mang: responseJson,
+        //         refresh: false,
+        //         page: 3,
+        //     });
+        // })
+        // .catch((e)=>{console.log(e)});
+        //alert(global.latsearch + '------' + global.longsearch);
+
+        // this.setState({
+        //     page: 1
+        // });
+        // if (this.state.refresh === false) {
+        //     //global.trangloc = 1;
+        //     this.setState({
+        //         refresh: true
+        //     })
+        //     fetch(global.server.concat('getDanhSachTrongBanKinh.php?lat=' + global.latsearch + '&long=' + global.latsearch + '&bankinh=10000')
+        //     .then((response) => response.json())
+        //     .then((responseJson) => {
+        //         if(responseJson.length > 0)
+        //             this.setState({
+        //                 mang: this.state.mang.concat(responseJson),
+        //                 refresh: false,
+        //                 page: this.state.page + 1
+        //             });
+        //         else{
+        //             this.setState({ 
+        //                 refresh: false,
+        //             });
+        //         }
+        //     })
+        //     .catch((e) => { console.log(e) });
+        // }
+        //alert('323423');
+        //alert(global.latsearch +'-----------'+global.longsearch+'------'+global.bankinhsearch);
+        this.setState({
+            page: 1
+        }, function() {
+            global.trangloc = 1;
+            alert('Vào');
+            this.loadData(this.state.page);
+        });
+        //alert('Qau đây r');
+    }
+
     loadMore() {
         this.loadData(this.state.page);
     }
@@ -113,26 +161,42 @@ export default class Main extends Component {
     }
     showModal = () => this.setState({ isModalVisible: true });
     loadData(page) {
-        
         if (global.locDL === false) {
             if (this.state.refresh === false) {
+               //alert(global.server.concat('getListKhachSan.php?trang=') + page + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch);
                 global.trangloc = 1;
                 this.setState({
                     refresh: true
-                })
-                fetch(global.server.concat('getListKhachSan.php?trang=') + page)
+                });
+                //alert(global.server.concat('getListKhachSan.php?trang=') + page + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch);
+                fetch(global.server.concat('getListKhachSan.php?trang=') + page + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch)
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    if(responseJson.length > 0)
-                        this.setState({
-                            mang: this.state.mang.concat(responseJson),
-                            refresh: false,
-                            page: this.state.page + 1
-                        });
-                    else{
-                        this.setState({ 
-                            refresh: false,
-                        });
+                    if (responseJson.length > 0) {
+                        if (this.state.page === 1) {
+                            this.setState({
+                                mang: responseJson,
+                                refresh: false,
+                                page: this.state.page + 1
+                            });
+                        } else {
+                            this.setState({
+                                mang: this.state.mang.concat(responseJson),
+                                refresh: false,
+                                page: this.state.page + 1
+                            });
+                        }
+                    } else {
+                            if (this.state.page === 1) {
+                                this.setState({ 
+                                    refresh: false,
+                                    mang: []
+                                });
+                            } else {
+                                this.setState({ 
+                                    refresh: false,
+                                });
+                            }
                     }
                 })
                 .catch((e) => { console.log(e) });
@@ -148,7 +212,7 @@ export default class Main extends Component {
                         this.setState({
                             refresh: true,
                         })
-                        fetch(global.server + 'getDanhSachKhachSanLocSao.php?trang=' + global.trangloc + '&sosao=' + global.locsao)
+                        fetch(global.server + 'getDanhSachKhachSanLocSao.php?trang=' + global.trangloc + '&sosao=' + global.locsao + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch)
                         .then((response) => response.json())
                         .then((responseJson) => {
                             if (responseJson.length > 0) {
@@ -189,12 +253,13 @@ export default class Main extends Component {
                         if (global.locsao === ''){
                             global.locsao = '12345'; // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
                         }
-                        
+                    
                     if(this.state.refresh === false) {
                             this.setState({
                                 refresh: true,
-                            })
-                            fetch(global.server + 'getListKhachSanLoc.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao)
+                            });
+                            //alert(global.server + 'getListKhachSanLoc.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch);
+                            fetch(global.server + 'getListKhachSanLoc.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch)
                             .then((response) =>  response.json() )
                             .then((responseJson) => {
                                 if (responseJson.length > 0) {
@@ -240,10 +305,7 @@ export default class Main extends Component {
                         if (global.locsao === '') {
                             global.locsao = '12345'; // Lấy tất cả các khách sạn từ 12345 sao nếu ko chọn sao
                         }
-
-                        //alert('Vào');
-
-                        fetch(global.server + 'locKhachSan_Gia_Sao.php?trang=' + global.trangloc + '&sosao=' + global.locsao + '&giamin=' + global.locgiamin + '&giamax=' + global.locgiamax)
+                        fetch(global.server + 'locKhachSan_Gia_Sao.php?trang=' + global.trangloc + '&sosao=' + global.locsao + '&giamin=' + global.locgiamin + '&giamax=' + global.locgiamax + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch)
                         .then((response) => response.json())
                         .then((responseJson) => {
                             if (responseJson.length > 0) {
@@ -292,7 +354,7 @@ export default class Main extends Component {
                                     refresh: true,
                                 })
                                 //alert(global.server.concat('locKhachSan_Gia_Sao_TienNghi.php?trang='+global.trangloc+'&tiennghi='+global.loctiennghi+'&sosao='+global.locsao+'&giamax='+global.locgiamax+'&giamin='+global.locgiamin));
-                                fetch(global.server.concat('locKhachSan_Gia_Sao_TienNghi.php?trang='+global.trangloc+'&tiennghi='+global.loctiennghi+'&sosao='+global.locsao+'&giamax='+global.locgiamax+'&giamin='+global.locgiamin))
+                                fetch(global.server.concat('locKhachSan_Gia_Sao_TienNghi.php?trang=' + global.trangloc + '&tiennghi=' + global.loctiennghi + '&sosao=' + global.locsao + '&giamax=' + global.locgiamax + '&giamin=' + global.locgiamin + '&lat=' + global.latsearch + '&long=' + global.longsearch + '&bankinh=' + global.bankinhsearch))
                                 .then((response) => response.json())
                                 .then((responseJson) => {
                                     if (responseJson.length > 0) {
@@ -345,11 +407,11 @@ export default class Main extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style = {styles.container}>
+            <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={{ flex: 1 }}>
                         <TouchableWithoutFeedback
-                        onPress={() => { navigate('DrawerOpen') }}
+                        onPress={() => { navigate('DrawerOpen'); }}
                         >
                             <Image style={styles.imgHeader} source={opemenu} />
                         </TouchableWithoutFeedback>
@@ -365,12 +427,12 @@ export default class Main extends Component {
                     </View>
                     <View style={{ flex: 4, justifyContent: 'space-between', flexDirection: 'row', paddingRight: 5 }}>
                         <TouchableOpacity
-                            onPress={() => { navigate('SearchScreen', { navtigation: navigate }) }}
+                            onPress={() => { navigate('SearchScreen', { navtigation: navigate }); }}
                         >
                             <Image style={styles.imgHeader} source={icsearch} />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={()=>{ this.clickMap() }}                        
+                            onPress={() => { this.clickMap(); }}                        
                         >
                             <Image style={styles.imgHeader} source={icMap} />
                         </TouchableOpacity>
@@ -384,7 +446,7 @@ export default class Main extends Component {
 
                 </View>
                 <TouchableOpacity
-                    onPress={()=>{this.refs.ds.scrollToIndex({animated: true,index:0,viewPosition:0})}}
+                    onPress={() => { this.refs.ds.scrollToIndex({ animated: true, index: 0, viewPosition: 0 }); }}
                 >
                     <Text>Up</Text>
                 </TouchableOpacity>
@@ -395,14 +457,14 @@ export default class Main extends Component {
                     <Text>Load Page 3</Text>
                 </TouchableOpacity> */}
 
-                <View style={{height: this.state.maxheight }}>
+                <View style={{ height: this.state.maxheight }}>
                 <FlatList
                     onEndReachedThreshold={0.2}
-                    onEndReached={() => { this.loadMore() }}
+                    onEndReached={() => { this.loadMore(); }}
                     ref="ds"
                     //ListHeaderComponent={(<HeaderFlatList />)}
                     refreshing={this.state.refresh}
-                    onRefresh={() => { this.refresh() }}
+                    onRefresh={() => { this.refresh(); }}
                     data={this.state.mang}
                     renderItem={({ item }) =>
                         <View style={styles.rowFlatlist}>
@@ -420,7 +482,7 @@ export default class Main extends Component {
                                                     <Text numberOfLines={1} style={{ fontWeight: 'bold' }}>{item.ten}</Text>
                                                     <Text numberOfLines={1}>{item.diachi}</Text>
                                                 </View>
-                                                <View style = {{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee', flexDirection: 'row' }}>
+                                                <View style={{ flex: 2, borderTopWidth: 1, borderTopColor: '#e9ebee', flexDirection: 'row' }}>
                                                     <View style={{ flex: 1 }}>
                                                         <View style={{ flex: 1, paddingHorizontal: 2, paddingVertical: 2, flexDirection: 'row' }}>
                                                             {/* <Image resizeMode={'contain'} source={item.key%2===0 ? s1: s3} style={{ flex: 1 }} /> */}
@@ -446,9 +508,8 @@ export default class Main extends Component {
 
                                                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                                             <TouchableOpacity
-                                                                
                                                             >
-                                                                <Text style = {{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>View Details</Text>
+                                                                <Text style={{ backgroundColor: '#248f24', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 3, color: 'white' }}>View Details</Text>
                                                             </TouchableOpacity>
                                                         </View>
 
@@ -462,7 +523,9 @@ export default class Main extends Component {
                         </View>
                     }
                 />
-                
+                <View style={{ height: this.state.heigthmapview }}>
+                        <MapViewComponent />
+                </View>
                     {/* <View style={{ backgroundColor: 'white', height: this.state.heightbottom }}>
                         <TouchableOpacity
                             onPress={() => { this.popupDialog.show() }}
