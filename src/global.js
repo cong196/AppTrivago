@@ -10,6 +10,6 @@ module.export = {
     locDL: false,
     trangloc: 1,
     loadDuLieuLoc: null,
-    server: null,
+    server: 'http://192.168.1.88:8080/Demo/',
     userdangnhap: null
 }

@@ -266,8 +266,8 @@ export default class Main extends Component {
                                 global.trangloc = global.trangloc + 1;
                             }
                             else{
-                                if(global.trangloc === 1){
-                                    this.setState({mang:[]})
+                                if(global.trangloc === 1) {
+                                    this.setState({ mang: [] })
                                 }
                                     this.setState({ 
                                         refresh: false,
@@ -303,7 +303,7 @@ export default class Main extends Component {
                                                     refresh: false,
                                                 });
                                         }
-                                        else{
+                                        else {
                                             this.setState({
                                                 mang: this.state.mang.concat(responseJson),
                                                 refresh: false
@@ -311,8 +311,8 @@ export default class Main extends Component {
                                         }
                                         global.trangloc = global.trangloc + 1;
                                     }
-                                    else{
-                                        if(global.trangloc === 1) {
+                                    else {
+                                        if (global.trangloc === 1) {
                                             this.setState({ mang: [] })
                                         }
                                             this.setState({ 
@@ -321,7 +321,7 @@ export default class Main extends Component {
                                     }
                                 }) 
                                 .catch((e) => { 
-                                    alert(e) 
+                                    alert(e);
                                 });
                             }
                         }
@@ -357,14 +357,18 @@ export default class Main extends Component {
                     <View style={{ flex: 5 }}>
                         
                             <TextInput 
-                                onFocus = { () => { navigate('SearchScreen', {navtigation: navigate })}}
+                                //onFocus = { () => { navigate('SearchScreen', {navtigation: navigate })}}
                                 placeholder='Tìm kiếm'
                                 underlineColorAndroid='rgba(0,0,0,0)'
                             />
                        
                     </View>
                     <View style={{ flex: 4, justifyContent: 'space-between', flexDirection: 'row', paddingRight: 5 }}>
-                        <Image style={styles.imgHeader} source={icsearch} />
+                        <TouchableOpacity
+                            onPress={() => { navigate('SearchScreen', { navtigation: navigate }) }}
+                        >
+                            <Image style={styles.imgHeader} source={icsearch} />
+                        </TouchableOpacity>
                         <TouchableOpacity
                             onPress={()=>{ this.clickMap() }}                        
                         >
