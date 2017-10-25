@@ -34,7 +34,8 @@ export default class Main extends Component {
             isModalVisible: false,
             sortIndex: 0,
             page: 1,
-            load1: true
+            load1: true,
+            
         };
         global.searchData = this.loadDataFromSearch.bind(this);
         global.loctiennghi = '0000000000';
@@ -47,16 +48,16 @@ export default class Main extends Component {
         global.locDL = false;
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
-        global.server = 'http://192.168.1.88:8080/Demo/';
+        global.server = 'http://192.168.1.90:8080/Demo/';
         global.latsearch = 10.1686747;
         global.longsearch = 106.6992098;
         global.bankinhsearch = 70;
+        global.mapAlready = false;
         //global.server = 'https://webservicestrivago.000webhostapp.com/';
     }
 
     componentDidMount() {
         this.loadData(this.state.page);
-       
     }
     refresh() {
         this.setState({ page: 1, mang: [], load1: true });
@@ -92,8 +93,10 @@ export default class Main extends Component {
         });
         if (this.state.map) {
             this.setState({ maxheight: 0, heightbottom: 0, heigthmapview: height - height1 - height2 });
+            global.mapAlready = true;
         } else {
             this.setState({ maxheight: height - height1 - height2, heightbottom: height1, heigthmapview: 0 });
+            global.mapAlready = false;
         }
     }
     loadDataFromSearch() {
@@ -143,7 +146,7 @@ export default class Main extends Component {
             page: 1
         }, function() {
             global.trangloc = 1;
-            alert('Vào');
+            //alert('Vào');
             this.loadData(this.state.page);
         });
         //alert('Qau đây r');
@@ -160,6 +163,8 @@ export default class Main extends Component {
         this.refresh();
     }
     showModal = () => this.setState({ isModalVisible: true });
+
+    
     loadData(page) {
         if (global.locDL === false) {
             if (this.state.refresh === false) {
@@ -177,7 +182,8 @@ export default class Main extends Component {
                             this.setState({
                                 mang: responseJson,
                                 refresh: false,
-                                page: this.state.page + 1
+                                page: this.state.page + 1,
+                                
                             });
                         } else {
                             this.setState({
@@ -190,7 +196,8 @@ export default class Main extends Component {
                             if (this.state.page === 1) {
                                 this.setState({ 
                                     refresh: false,
-                                    mang: []
+                                    mang: [],
+                                   
                                 });
                             } else {
                                 this.setState({ 
@@ -217,15 +224,13 @@ export default class Main extends Component {
                         .then((responseJson) => {
                             if (responseJson.length > 0) {
                                 if (global.trangloc === 1) {
-                                // let mang = responseJson;
-
                                     this.setState({
                                             mang: responseJson,
                                             refresh: false,
+                                            
                                             //page: this.state.page + 1
                                         });
-                                }
-                                else {
+                                } else {
                                     this.setState({
                                         mang: this.state.mang.concat(responseJson),
                                         refresh: false
@@ -268,11 +273,10 @@ export default class Main extends Component {
 
                                         this.setState({
                                                 mang: responseJson,
-                                                refresh: false,
+                                                refresh: false
                                                 //page: this.state.page + 1
                                             });
-                                    }
-                                    else{
+                                    } else{
                                         this.setState({
                                             mang: this.state.mang.concat(responseJson),
                                             refresh: false,
@@ -314,11 +318,10 @@ export default class Main extends Component {
 
                                     this.setState({
                                             mang: responseJson,
-                                            refresh: false,
+                                            refresh: false
                                             //page: this.state.page + 1
                                         });
-                                }
-                                else{
+                                } else {
                                     this.setState({
                                         mang: this.state.mang.concat(responseJson),
                                         refresh: false,
@@ -329,7 +332,7 @@ export default class Main extends Component {
                             }
                             else{
                                 if(global.trangloc === 1) {
-                                    this.setState({ mang: [] })
+                                    this.setState({ mang: [], arrLatLong: [] })
                                 }
                                     this.setState({ 
                                         refresh: false,
@@ -364,8 +367,7 @@ export default class Main extends Component {
                                                     mang: responseJson,
                                                     refresh: false,
                                                 });
-                                        }
-                                        else {
+                                        } else {
                                             this.setState({
                                                 mang: this.state.mang.concat(responseJson),
                                                 refresh: false
@@ -375,7 +377,7 @@ export default class Main extends Component {
                                     }
                                     else {
                                         if (global.trangloc === 1) {
-                                            this.setState({ mang: [] })
+                                            this.setState({ mang: [], arrLatLong: [] })
                                         }
                                             this.setState({ 
                                                 refresh: false,
@@ -404,6 +406,10 @@ export default class Main extends Component {
         this.props.navigation.navigate('DrawerClose');
        this.loadData();
     }
+    goDetails(ten, id) {
+        this.props.navigation.navigate('DetailScreen', { name: ten, id: id });
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -524,7 +530,8 @@ export default class Main extends Component {
                     }
                 />
                 <View style={{ height: this.state.heigthmapview }}>
-                        <MapViewComponent />
+                         <MapViewComponent data={this.state.mang} goDetails={this.goDetails.bind(this)} />
+                        {/* <MapViewComponent /> */}
                 </View>
                     {/* <View style={{ backgroundColor: 'white', height: this.state.heightbottom }}>
                         <TouchableOpacity

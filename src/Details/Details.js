@@ -70,7 +70,7 @@ export default class Details extends Component {
     render() {
         const lst = <IndicatorViewPager
                         style={{height: height / 3 - 10 }}
-                        indicator={this._renderDotIndicator()} >
+                        indicator={ this._renderDotIndicator() } >
                     { 
                         this.state.mang.map(
                             e => (

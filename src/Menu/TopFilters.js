@@ -55,7 +55,8 @@ export default class TopFilters extends Component {
             gym: false,
             value: 0,
             valuemax: 0,
-            valueText: ''
+            valueText: '',
+            valuebankinh: 1
         };
     }
     render() {
@@ -348,7 +349,23 @@ export default class TopFilters extends Component {
                                    }
                 />
                 </View>
+                <View style={{ height: 1, backgroundColor: 'gray' }} />
 
+                <View style={{ paddingVertical: 10, padding: 10 }}>
+                    <Text>Bán kính tìm kiếm {this.state.valuebankinh} KM</Text>
+                <Slider
+                    
+                    minimumValue={1}
+                    maximumValue={100}
+                    step={1}
+                    thumbTouchSize={{ width: 50, height: 50 }}
+                    onValueChange={(value) => {
+                                                this.setState({ valuebankinh: value });
+                                                global.bankinhsearch = value;
+                                             }
+                                   }
+                />
+                </View>
             </ScrollView>
         )
     }

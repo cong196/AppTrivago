@@ -16,6 +16,7 @@ export default class Search extends Component {
         global.searchData();
         this.goBack1();
         
+        
     }
     goBack1() {
         this.props.navigation.goBack();
@@ -30,8 +31,8 @@ export default class Search extends Component {
             // });
             //console.log(responseJson);
             // console.log(responseJson);
-            this.setState({mang: []})
-            for (let i = 0 ; i<responseJson.predictions.length; i++)
+            this.setState({ mang: [] });
+            for (let i = 0; i < responseJson.predictions.length; i++)
             {  
                 //console.log(responseJson.predictions[i].description + '---' + responseJson.predictions[i].place_id);
                 this.setState({
