@@ -481,7 +481,7 @@ export default class Main extends Component {
                                     }}
                             >
                              <View style={{ height: width / 3, flexDirection: 'row', backgroundColor: 'white', borderRadius: 5 }}>
-                                        <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }}/>
+                                        <Image source={{ uri: item.hinh }} style={{ height: width / 3, width: width / 3, flex: 1 }} />
                                         <View style={{ flex: 2 }}>
                                             <View style={{ flex: 1 }}>
                                                 <View style={{ flex: 1, paddingLeft: 5, paddingVertical: 2, paddingRight: 2 }}>

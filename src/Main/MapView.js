@@ -98,6 +98,7 @@ export default class MapViewComponent extends Component {
                 //description={'h'}
               >
                 <MapView.Callout 
+                  style={{ borderRadius: 10 }}
                   tooltip={false}
                   flat={true}
                   onPress={()=>{
