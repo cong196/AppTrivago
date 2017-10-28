@@ -5,7 +5,7 @@ import {
 import { TabNavigator } from 'react-navigation';
 import Details_Info from './Details_Info';
 import Ratings from './Ratings';
-import MapView from './MapView';
+import MapViewDetails from './MapViewDetails';
 import Images from './Images';
 export const TbDetails = TabNavigator(
     {
@@ -28,7 +28,7 @@ export const TbDetails = TabNavigator(
             }
         },
         TabMapView: {
-            screen: MapView,
+            screen: MapViewDetails,
             navigationOptions: {
                 tabBarLabel: 'Bản Đồ'
             }

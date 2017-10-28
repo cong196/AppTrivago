@@ -48,7 +48,7 @@ export default class Main extends Component {
         global.locDL = false;
         global.loadDuLieuLoc = this.loadDataLoc.bind(this);
         global.trangloc = 1;
-        global.server = 'http://192.168.1.90:8080/Demo/';
+        global.server = 'http://192.168.1.89:8080/Demo/';
         global.latsearch = 10.1686747;
         global.longsearch = 106.6992098;
         global.bankinhsearch = 70;

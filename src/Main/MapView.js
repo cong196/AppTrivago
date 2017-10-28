@@ -111,7 +111,7 @@ export default class MapViewComponent extends Component {
               </MapView.Marker>
               )) : null
         }
-        {
+        {/* {
           global.mapAlready === true ? 
           <MapView.Circle 
             center={this.state.cod}
@@ -120,7 +120,7 @@ export default class MapViewComponent extends Component {
             strokeColor='transparent'
           />
           : null
-        }
+        } */}
         </MapView>
         <TouchableHighlight
           onPress={() => { 
